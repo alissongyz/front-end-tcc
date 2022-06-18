@@ -2,7 +2,6 @@ import React from 'react';
 import * as AiIcons from 'react-icons/ai';
 import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
-import * as IoIcons from 'react-icons/io';
 
 export const SideBarData = [
     {
@@ -18,17 +17,17 @@ export const SideBarData = [
     {
         title: 'Materiais',
         path: '/material',
-        icon: <IoIcons.IoIosDocument />,
+        icon: <AiIcons.AiOutlineLayout />,
     },
     {
         title: 'Painel Aprovação de saídas',
         path: '/teste',
-        icon: <IoIcons.IoIosDocument />,
+        icon: <AiIcons.AiOutlineProject />,
     },
     {
         title: 'Registro de Saídas',
         path: '/teste2',
-        icon: <IoIcons.IoIosDocument />,
+        icon: <AiIcons.AiOutlineSolution />,
     },
     {
         title: 'Sobre Nós',
