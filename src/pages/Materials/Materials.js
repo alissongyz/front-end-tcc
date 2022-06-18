@@ -7,6 +7,7 @@ function Material() {
   const baseUrlMaterial = "http://localhost:3002/v1/material";
 
   const [data, setData] = useState([]);
+  const [updateData, setUpdateData] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
   const [showModalPatch, setModalPatch] = useState(false);
@@ -61,6 +62,7 @@ function Material() {
       .post(baseUrlMaterial, materialSelected)
       .then((res) => {
         setData(data.concat(res.data));
+        setUpdateData(true);
         openCloseModalIncluir();
       })
       .catch((error) => {
@@ -85,6 +87,7 @@ function Material() {
             material.expiration = response.expiration;
           }
         });
+        setUpdateData(true);
         openCloseModalPatch();
       })
       .catch((error) => {
@@ -93,8 +96,11 @@ function Material() {
   };
 
   useEffect(() => {
-    getAll();
-  });
+    if (updateData) {
+      getAll();
+      setUpdateData(false);
+    }
+  }, [updateData]);
 
   return (
     <>
@@ -187,7 +193,8 @@ function Material() {
                     <input
                       type="text"
                       className="border-color"
-                      readOnly value={materialSelected && materialSelected.qnty}
+                      readOnly
+                      value={materialSelected && materialSelected.qnty}
                     />{" "}
                     <br />
                     <label className="text-gray-500">Quantidade Mínima:</label>
@@ -221,7 +228,10 @@ function Material() {
                       className="border-color"
                       name="expiration"
                       onChange={handleChange}
-                      value={materialSelected && moment(materialSelected.expiration).format("DD-MM-YYYY")}
+                      value={
+                        materialSelected &&
+                        moment(materialSelected.expiration).format("DD-MM-YYYY")
+                      }
                     />{" "}
                     <br />
                   </div>
