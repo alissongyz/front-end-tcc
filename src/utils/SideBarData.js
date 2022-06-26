@@ -20,6 +20,11 @@ export const SideBarData = [
         icon: <AiIcons.AiOutlineLayout />,
     },
     {
+        title: 'Usuários',
+        path: '/users',
+        icon: <AiIcons.AiOutlineUsergroupAdd />,
+    },
+    {
         title: 'Painel Aprovação de saídas',
         path: '/teste',
         icon: <AiIcons.AiOutlineProject />,

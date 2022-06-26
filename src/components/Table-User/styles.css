@@ -12,11 +12,10 @@
   min-width: 80%;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(248, 248, 248, 0.336);
 }
 
 .content-table thead tr {
-  background-color: #6239eb;
+  background-color: #2D8AE0;
   color: #ffffff;
   text-align: center;
   font-weight: bold;
@@ -31,6 +30,17 @@
 .border-color {
   width: 100%;
   color: black;
+  padding: 8px 12px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 2px solid #303234;
+}
+
+.border-color-quantity {
+  width: 100%;
+  color: black;
+  background-color: #2d89e0d2;
   padding: 8px 12px;
   margin: 8px 0;
   box-sizing: border-box;
