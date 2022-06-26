@@ -8,7 +8,7 @@ export const NavbarMenu = styled.div`
 `;
 
 export const NavMenu = styled.nav`
-  background-color: #1a1c1e;
+  background-color: #2D8AE0;
   z-index: 99;
   width: 17.5vw;
   min-width: 200px;
@@ -51,7 +51,7 @@ export const NavText = styled.div`
   }
   
   &:hover {
-    background-color: #6239eb;
+    background-color: #2FC7F5;
     path {
       color: #fff;
     }
@@ -59,14 +59,17 @@ export const NavText = styled.div`
 `;
 
 export const ShowSidebarButton = styled.button`
-  background-color: #303234;
+  background-color: #fff;
+  path {
+    color: #2FC7F5;
+  }
   padding: 8px;
   margin-left: 7rem;
   font-size: 1.1rem;
   border-radius: 100%;
 
   &:hover {
-    background-color: #6239eb;
+    background-color: #2FC7F5;
     path {
       color: #fff;
     }

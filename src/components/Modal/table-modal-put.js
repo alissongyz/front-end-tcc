@@ -3,83 +3,91 @@ import api from "../../utils/api";
 import moment from "moment";
 
 const ModalGetAndUpdateMaterial = () => {
-    const [data, setData] = useState([]);
-    const [updateData, setUpdateData] = useState(true);
-  
-    const [showModalPatch, setModalPatch] = useState(false);
-  
-    const openCloseModalPatch = () => {
-      setModalPatch(!showModalPatch);
-    };
-  
-    const [materialSelected, setMaterialSelected] = useState({
-      id: "",
-      name: "",
-      qnty: "",
-      descQnty: "",
-      minQnty: "",
-      unitValue: "",
-      expiration: "",
+  const [data, setData] = useState([]);
+  const [updateData, setUpdateData] = useState(true);
+
+  const [itemsPerPage] = useState(8);
+  const [currentPage, setCurrentePage] = useState(0);
+
+  const pages = Math.ceil(data.length / itemsPerPage);
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = data.slice(startIndex, endIndex);
+
+  const [showModalPatch, setModalPatch] = useState(false);
+
+  const openCloseModalPatch = () => {
+    setModalPatch(!showModalPatch);
+  };
+
+  const [materialSelected, setMaterialSelected] = useState({
+    id: "",
+    name: "",
+    qnty: "",
+    descQnty: "",
+    minQnty: "",
+    unitValue: "",
+    expiration: "",
+  });
+
+  const selectMaterial = (material, option) => {
+    setMaterialSelected(material);
+    option === "Editar" && openCloseModalPatch();
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setMaterialSelected({
+      ...materialSelected,
+      [name]: value,
     });
-  
-    const selectMaterial = (material, option) => {
-      setMaterialSelected(material);
-      option === "Editar" && openCloseModalPatch();
-    };
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-  
-      setMaterialSelected({
-        ...materialSelected,
-        [name]: value,
+    console.log(materialSelected);
+  };
+
+  const getAll = async () => {
+    await api
+      .get("material")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      console.log(materialSelected);
-    };
-  
-    const getAll = async () => {
-      await api
-        .get("material")
-        .then((res) => {
-          setData(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
+  };
+
+  const updateMaterial = async () => {
+    await api
+      .patch("material/" + materialSelected.id, materialSelected)
+      .then((res) => {
+        var response = res.data;
+        var dataAux = data;
+
+        // eslint-disable-next-line array-callback-return
+        dataAux.map((material) => {
+          if (material.id === materialSelected.id) {
+            material.name = response.name;
+            material.qnty = response.qnty;
+            material.descQnty = response.descQnty;
+            material.minQnty = response.minQnty;
+            material.unitValue = response.unitValue;
+            material.expiration = response.expiration;
+          }
         });
-    };
-  
-    const updateMaterial = async () => {
-      await api
-        .patch("material/" + materialSelected.id, materialSelected)
-        .then((res) => {
-          var response = res.data;
-          var dataAux = data;
-  
-          // eslint-disable-next-line array-callback-return
-          dataAux.map((material) => {
-            if (material.id === materialSelected.id) {
-              material.name = response.name;
-              material.qnty = response.qnty;
-              material.descQnty = response.descQnty;
-              material.minQnty = response.minQnty;
-              material.unitValue = response.unitValue;
-              material.expiration = response.expiration;
-            }
-          });
-          setUpdateData(true);
-          openCloseModalPatch();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-  
-    useEffect(() => {
-      if (updateData) {
-        getAll();
-        setUpdateData(false);
-      }
-    }, [updateData]);
+        setUpdateData(true);
+        openCloseModalPatch();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (updateData) {
+      getAll();
+      setUpdateData(false);
+    }
+  }, [updateData]);
 
   return (
     <>
@@ -97,7 +105,7 @@ const ModalGetAndUpdateMaterial = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((material) => (
+            {currentItems.map((material) => (
               <tr>
                 <td className="px-8 py-4"> {material.name} </td>
                 <td className="px-8 py-4"> {material.qnty} </td>
@@ -115,7 +123,7 @@ const ModalGetAndUpdateMaterial = () => {
                   {" "}
                   <button
                     className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
-                            rounded-md shadow-sm text-base font-normal text-white bg-[#303234] active:bg-[#6239eb] hover:bg-[#6239eb]"
+                    rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
                     onClick={() => selectMaterial(material, "Editar")}
                   >
                     Atualizar
@@ -125,6 +133,19 @@ const ModalGetAndUpdateMaterial = () => {
             ))}
           </tbody>
         </table>
+        
+        <div className="btn-group">
+          {Array.from(Array(pages), (item, index) => {
+            return (
+              <button
+                value={index}
+                onClick={(e) => setCurrentePage(Number(e.target.value))}
+              >
+                {index + 1}
+              </button>
+            );
+          })}
+        </div>
 
         {/*MODAL DE ATUALIZAÇÃO*/}
         {showModalPatch ? (
@@ -135,7 +156,7 @@ const ModalGetAndUpdateMaterial = () => {
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                    <h3 className="text-3xl font-semibold text-gray-500">
+                    <h3 className="text-3xl font-semibold text-gray-[#2D8AE0]">
                       Atualizar Material
                     </h3>
                     <button
@@ -213,8 +234,8 @@ const ModalGetAndUpdateMaterial = () => {
                       Fechar
                     </button>
                     <button
-                      className="bg-[#303234] text-white active:bg-[#6239eb] font-bold uppercase text-sm px-6 py-3 rounded shadow 
-                      hover:bg-[#6239eb] outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      className="bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF] font-bold uppercase text-sm px-6 py-3 rounded shadow 
+                      outline-none text-white focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       onClick={() => {
                         updateMaterial();

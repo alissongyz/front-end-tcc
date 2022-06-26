@@ -48,13 +48,13 @@ const ModalCreateMaterial = () => {
   return (
     <>
       <div className="flex justify-center">
-        <nav class="hidden md:flex items-center justify-center md:flex-1 lg:w-0">
-          <h2 className="text-lg m-5 font-medium item-left justify-left text-gray-200">
+        <nav className="hidden md:flex items-center justify-center md:flex-1 lg:w-0">
+          <h2 className="text-lg m-5 font-medium item-left justify-left text-gray-[#2D8AE0]">
             Estoque de Materiais
           </h2>
           <button
             className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
-                            rounded-md shadow-sm text-base font-normal text-white bg-[#303234] hover:bg-[#6239eb]"
+                            rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
             onClick={() => openCloseModal()}
           >
             Novo Material
@@ -69,7 +69,7 @@ const ModalCreateMaterial = () => {
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                    <h3 className="text-3xl font-semibold text-gray-500">
+                    <h3 className="text-3xl font-semibold text-gray-[#2D8AE0]">
                       Novo Material
                     </h3>
                     <button
@@ -139,8 +139,8 @@ const ModalCreateMaterial = () => {
                       Fechar
                     </button>
                     <button
-                      className="bg-[#303234] text-white active:bg-[#6239eb] font-bold uppercase text-sm px-6 py-3 rounded shadow 
-                      hover:bg-[#6239eb] outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      className="bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF] text-white font-bold uppercase text-sm px-6 py-3 rounded shadow 
+                      outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       onClick={() => createMaterial()}
                     >

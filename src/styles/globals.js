@@ -4,8 +4,8 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     margin: 0;
     padding: 0;
-    background: #161618;
-    color: #FFFFFF;
+    background: #FFFFFF;
+    color: #2D8AE0;
     font-family: 'Poppins', cursive;
     font-size: 16px;
     scroll-behavior:smooth;

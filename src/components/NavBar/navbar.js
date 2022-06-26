@@ -14,10 +14,10 @@ const Navbar = () => {
 
   return (
     <>
-      <IconContext.Provider value={{ color: "#5e5e60" }}>
+      <IconContext.Provider value={{ color: "#fff" }}>
         <NavbarMenu>
           <button onClick={showSidebar} className="ml-8 text-[1.5rem]">
-            <FaBars color="#fff" />
+            <FaBars color="#2D8AE0" />
           </button>
         </NavbarMenu>
         <NavMenu className={sidebar && "active"}>

@@ -1,6 +1,6 @@
 import React from "react";
 import ModalCreateMaterial from "../../components/Modal/modal-post";
-import ModalGetAndUpdateMaterial from "../../components/Modal/modal-put";
+import ModalGetAndUpdateMaterial from "../../components/Modal/table-modal-put";
 
 function Material() {
   return (
