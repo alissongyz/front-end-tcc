@@ -12,7 +12,7 @@ const CreateUser = () => {
   };
 
   const [userSelected, setUserSelected] = useState({
-    id: "",
+    uuid: "",
     username: "",
     password: "",
     role: "",
@@ -31,7 +31,7 @@ const CreateUser = () => {
   };
 
   const createMaterial = async () => {
-    delete userSelected.id;
+    delete userSelected.uuid;
     await api
       .post("user", userSelected)
       .then((res) => {
@@ -104,10 +104,11 @@ const CreateUser = () => {
                       name="role"
                       onChange={handleChange}
                     >
-                        <option>admin</option>
-                        <option>veterinario</option>
-                        <option>farmaceutico</option>
-                        <option>usuario</option>
+                        <option selected disabled></option>
+                        <option value="admin">Admin</option>
+                        <option value="veterinario">Veterinário</option>
+                        <option value="farmaceutico">Farmacêutico</option>
+                        <option value="usuario">Usuário</option>
                     </select>
                   </div>
                   {/*footer*/}

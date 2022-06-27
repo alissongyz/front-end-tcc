@@ -14,7 +14,7 @@ const TableUser = () => {
   };
 
   const [userSelected, setUserSelected] = useState({
-    id: "",
+    uuid: "",
     username: "",
     password: "",
     role: "",
@@ -50,14 +50,14 @@ const TableUser = () => {
 
   const updateMaterial = async () => {
     await api
-      .patch("user/" + userSelected.id, userSelected)
+      .patch("user/" + userSelected.uuid, userSelected)
       .then((res) => {
         var response = res.data;
         var dataAux = data;
 
         // eslint-disable-next-line array-callback-return
         dataAux.map((material) => {
-          if (material.id === userSelected.id) {
+          if (material.uuid === userSelected.uuid) {
             material.username = response.username;
             material.password = response.password;
             material.role = response.role;
