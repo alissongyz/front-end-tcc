@@ -21,7 +21,7 @@ const ModalGetAndUpdateMaterial = () => {
   };
 
   const [materialSelected, setMaterialSelected] = useState({
-    id: "",
+    uuid: "",
     name: "",
     qnty: "",
     descQnty: "",
@@ -58,14 +58,14 @@ const ModalGetAndUpdateMaterial = () => {
 
   const updateMaterial = async () => {
     await api
-      .patch("material/" + materialSelected.id, materialSelected)
+      .patch("material/" + materialSelected.uuid, materialSelected)
       .then((res) => {
         var response = res.data;
         var dataAux = data;
 
         // eslint-disable-next-line array-callback-return
         dataAux.map((material) => {
-          if (material.id === materialSelected.id) {
+          if (material.uuid === materialSelected.uuid) {
             material.name = response.name;
             material.qnty = response.qnty;
             material.descQnty = response.descQnty;

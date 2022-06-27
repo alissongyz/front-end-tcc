@@ -12,7 +12,7 @@ const ModalCreateMaterial = () => {
   };
 
   const [materialSelected, setMaterialSelected] = useState({
-    id: "",
+    uuid: "",
     name: "",
     qnty: "",
     descQnty: "",
@@ -32,7 +32,7 @@ const ModalCreateMaterial = () => {
   };
 
   const createMaterial = async () => {
-    delete materialSelected.id;
+    delete materialSelected.uuid;
     await api
       .post("material", materialSelected)
       .then((res) => {
