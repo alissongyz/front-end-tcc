@@ -150,7 +150,7 @@ const TableOrder = () => {
                         {row.status}
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>
                         <button
                           className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 

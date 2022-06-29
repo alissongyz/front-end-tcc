@@ -147,30 +147,30 @@ const TableMedicine = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
                   <TableRow key={row.name}>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>
                         {row.name}
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>{row.qnty}</Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>{row.valueOfInput}</Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>{row.descQnty}</Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>{moment(row.validity).format("DD-MM-YYYY")}</Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>{row.lote}</Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>
                         <button
                           className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 

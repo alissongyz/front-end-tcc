@@ -131,18 +131,18 @@ const TableUser = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
                   <TableRow key={row.username}>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>
                         {row.username}
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>{row.role}</Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       {moment(row.dateRegister).format("DD-MM-YYYY")}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>
                         <button
                           className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
