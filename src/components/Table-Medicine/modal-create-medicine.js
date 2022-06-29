@@ -257,7 +257,7 @@ const ModalCreateMedicine = () => {
                     <select
                       type="text"
                       className="border-color"
-                      name="role"
+                      name="itemName"
                       onChange={handleChangeOrder}
                     >
                        {dataName.map((row) => (
