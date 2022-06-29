@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../utils/api";
 import "../../styles/table-modal-styles.css";
 
 const ModalCreateMedicine = () => {
   const [data, setData] = useState([]);
+  const [dataName, setDataName] = useState([]);
   const [, setUpdateData] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
@@ -16,6 +17,20 @@ const ModalCreateMedicine = () => {
   const openCloseModalMedicine = () => {
     setShowModalMedicine(!showModalMedicine);
   };
+
+  const getAll = async () => {
+    await api
+      .get("medicines")
+      .then((res) => {
+        setDataName(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      console.log(dataName);
+  };
+
 
   const [medicineSelected, setMedicineSelected] = useState({
     uuid: "",
@@ -82,6 +97,10 @@ const ModalCreateMedicine = () => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+      getAll();
+  }, []);
 
   return (
     <>
@@ -233,14 +252,24 @@ const ModalCreateMedicine = () => {
                   {/*body*/}
                   <div className="relative p-6 flex-auto">
                     <label className="text-gray-500">
-                      Nome do medicamento:
+                      Medicamento:
                     </label>
-                    <input
+                    <select
+                      type="text"
+                      className="border-color"
+                      name="role"
+                      onChange={handleChangeOrder}
+                    >
+                       {dataName.map((row) => (
+                        <option value={row.name}>{row.name}</option>
+                        ))}
+                    </select>
+                    {/* <input
                       type="text"
                       className="border-color"
                       name="name"
                       onChange={handleChangeOrder}
-                    />
+                    /> */}
                     <label className="text-gray-500">Quantidade:</label>
                     <input
                       type="text"
