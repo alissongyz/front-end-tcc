@@ -7,7 +7,7 @@ export const useStyles = makeStyles((theme) => ({
   tableContainer: {
     borderRadius: 15,
     margin: "10px 10px",
-    maxWidth: "80%",
+    maxWidth: "85%",
   },
   tableHeaderCell: {
     textAlign: "center",
@@ -25,7 +25,7 @@ export const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: "grey",
     borderRadius: 8,
-    padding: "8px 16px",
+    padding: "8px 12px",
     display: "inline-block",
   },
 }));
