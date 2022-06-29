@@ -1,12 +1,12 @@
 import React from "react";
-import ModalCreateMaterial from '../../components/Table-Material/modal-post'
-import ModalGetAndUpdateMaterial from "../../components/Table-Material/table-material";
+import ModalCreateMaterial from '../../components/Table-Material/modal-create-material'
+import TableMaterial from "../../components/Table-Material/table-material";
 
 function Material() {
   return (
     <>
       <ModalCreateMaterial />
-      <ModalGetAndUpdateMaterial />
+      <TableMaterial />
     </>
   );
 }

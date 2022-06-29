@@ -2,10 +2,38 @@ import React, { useEffect, useState } from "react";
 import api from "../../utils/api";
 import moment from "moment";
 import CreateUser from "./modal-create-user";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  TablePagination,
+  TableFooter,
+} from "@material-ui/core";
+import "../../styles/table-modal-styles.css";
+import { useStyles } from "../../styles/table";
 
 const TableUser = () => {
+  const classes = useStyles();
+
   const [data, setData] = useState([]);
   const [updateData, setUpdateData] = useState(true);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   const [showModalPatch, setModalPatch] = useState(false);
 
@@ -14,7 +42,7 @@ const TableUser = () => {
   };
 
   const [userSelected, setUserSelected] = useState({
-    uuid: "",
+    id: "",
     username: "",
     password: "",
     role: "",
@@ -50,14 +78,14 @@ const TableUser = () => {
 
   const updateMaterial = async () => {
     await api
-      .patch("user/" + userSelected.uuid, userSelected)
+      .patch("user/" + userSelected.id, userSelected)
       .then((res) => {
         var response = res.data;
         var dataAux = data;
 
         // eslint-disable-next-line array-callback-return
         dataAux.map((material) => {
-          if (material.uuid === userSelected.uuid) {
+          if (material.id === userSelected.id) {
             material.username = response.username;
             material.password = response.password;
             material.role = response.role;
@@ -82,43 +110,65 @@ const TableUser = () => {
     <>
       <CreateUser />
       <div className="flex justify-center">
-        <table className="content-table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Nível de Acesso</th>
-              <th>Data de Registro</th>
-              <th>Data de Atualização</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((material) => (
-              <tr>
-                <td className="px-8 py-4"> {material.username} </td>
-                <td className="px-8 py-4"> {material.role} </td>
-                <td className="px-8 py-4">
-                  {" "}
-                  {moment(material.dateRegister).format("DD-MM-YYYY")}{" "}
-                </td>
-                <td className="px-8 py-4">
-                  {" "}
-                  {moment(material.dateUpdated).format("DD-MM-YYYY")}{" "}
-                </td>
-                <td>
-                  {" "}
-                  <button
-                    className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
+        <TableContainer component={Paper} className={classes.tableContainer}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.tableHeaderCell}>
+                  Nome de Usuário
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Nível de Acesso
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Data de Registro
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>Ações</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => (
+                  <TableRow key={row.username}>
+                    <TableCell>
+                      <Typography>
+                        {row.username}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography>{row.role}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      {moment(row.dateRegister).format("DD-MM-YYYY")}
+                    </TableCell>
+                    <TableCell>
+                      <Typography>
+                        <button
+                          className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
                     rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
-                    onClick={() => selectUser(material, "Editar")}
-                  >
-                    Atualizar
-                  </button>{" "}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                          onClick={() => selectUser(row, "Editar")}
+                        >
+                          Atualizar
+                        </button>{" "}
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+            <TableFooter>
+              <TablePagination
+                rowsPerPageOptions={[8, 12, 20]}
+                component="div"
+                count={data.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </TableFooter>
+          </Table>
+        </TableContainer>
 
         {/*MODAL DE ATUALIZAÇÃO*/}
         {showModalPatch ? (
@@ -152,13 +202,18 @@ const TableUser = () => {
                       value={userSelected && userSelected.username}
                     />
                     <label className="text-gray-500">Nível de Acesso:</label>
-                    <input
+                    <select
                       type="text"
                       className="border-color"
                       name="role"
                       onChange={handleChange}
-                      value={userSelected && userSelected.role}
-                    />{" "}
+                    >
+                      <option selected disabled></option>
+                      <option value="admin">Admin</option>
+                      <option value="veterinario">Veterinário</option>
+                      <option value="farmaceutico">Farmacêutico</option>
+                      <option value="usuario">Usuário</option>
+                    </select>
                     <br />
                   </div>
                   {/*footer*/}

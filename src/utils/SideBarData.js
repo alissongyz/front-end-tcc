@@ -2,22 +2,13 @@ import React from 'react';
 import * as AiIcons from 'react-icons/ai';
 import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
+import * as CgIcons from 'react-icons/cg';
 
 export const SideBarData = [
     {
-        title: 'Home',
-        path: '/',
-        icon: <AiIcons.AiFillHome />,
-    },
-    {
-        title: 'Medicamentos',
-        path: '/medicines',
-        icon: <RiIcons.RiDashboardLine />,
-    },
-    {
-        title: 'Materiais',
-        path: '/material',
-        icon: <AiIcons.AiOutlineLayout />,
+        title: 'Dashboard',
+        path: '/dashboard',
+        icon: <AiIcons.AiOutlineDashboard />,
     },
     {
         title: 'Usuários',
@@ -25,9 +16,24 @@ export const SideBarData = [
         icon: <AiIcons.AiOutlineUsergroupAdd />,
     },
     {
-        title: 'Painel Aprovação de saídas',
+        title: 'Materiais',
+        path: '/material',
+        icon: <AiIcons.AiOutlineLayout />,
+    },
+    {
+        title: 'Medicamentos',
+        path: '/medicine',
+        icon: <RiIcons.RiDashboardLine />,
+    },
+    {
+        title: 'Solicitar Saída de Medicamento',
         path: '/teste',
-        icon: <AiIcons.AiOutlineProject />,
+        icon: <AiIcons.AiOutlinePullRequest />,
+    },
+    {
+        title: 'Consultar Solicitações',
+        path: '/teste',
+        icon: <CgIcons.CgScreen />,
     },
     {
         title: 'Registro de Saídas',

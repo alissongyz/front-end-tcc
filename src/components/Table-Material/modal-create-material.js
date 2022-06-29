@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import api from "../../utils/api";
-import "./styles.css";
+import "../../styles/table-modal-styles.css";
 
 const ModalCreateMaterial = () => {
   const [data, setData] = useState([]);
@@ -118,6 +118,7 @@ const ModalCreateMaterial = () => {
                       type="text"
                       className="border-color"
                       name="unitValue"
+                      placeholder="Exemplo: 00.00"
                       onChange={handleChange}
                     />
                     <label className="text-gray-500">Data de Validade:</label>
@@ -125,6 +126,7 @@ const ModalCreateMaterial = () => {
                       type="text"
                       className="border-color"
                       name="expiration"
+                      placeholder="Exemplo: DD-MM-YYYY"
                       onChange={handleChange}
                     />{" "}
                     <br />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import api from "../../utils/api";
 import "../../styles/table-modal-styles.css";
 
-const CreateUser = () => {
+const ModalCreateMedicine = () => {
   const [data, setData] = useState([]);
   const [, setUpdateData] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -11,29 +11,31 @@ const CreateUser = () => {
     setShowModal(!showModal);
   };
 
-  const [userSelected, setUserSelected] = useState({
+  const [medicineSelected, setMedicineSelected] = useState({
     uuid: "",
-    username: "",
-    password: "",
-    role: "",
-    dateRegister: "",
-    dateUpdated: "",
+    name: "",
+    qnty: "",
+    minQnty: "",
+    descQnty: "",
+    valueOfInput: "",
+    validity: "",
+    lote: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setUserSelected({
-      ...userSelected,
+    setMedicineSelected({
+      ...medicineSelected,
       [name]: value,
     });
-    console.log(userSelected);
+    console.log(medicineSelected);
   };
 
   const createMaterial = async () => {
-    delete userSelected.uuid;
+    delete medicineSelected.uuid;
     await api
-      .post("user", userSelected)
+      .post("medicines", medicineSelected)
       .then((res) => {
         setData(data.concat(res.data));
         setUpdateData(true);
@@ -49,14 +51,14 @@ const CreateUser = () => {
       <div className="flex justify-center">
         <nav className="hidden md:flex items-center justify-center md:flex-1 lg:w-0">
           <h2 className="text-lg m-5 font-medium item-left justify-left text-gray-[#2D8AE0]">
-            Usuários
+            Estoque de Medicamentos
           </h2>
           <button
             className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
                             rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
             onClick={() => openCloseModal()}
           >
-            Novo Usuário
+            Novo Medicamento
           </button>
         </nav>
         {/*MODAL DE CADASTRO*/}
@@ -69,7 +71,7 @@ const CreateUser = () => {
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold text-gray-[#2D8AE0]">
-                      Novo Usuário
+                      Novo Medicamento
                     </h3>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -86,30 +88,56 @@ const CreateUser = () => {
                     <input
                       type="text"
                       className="border-color"
-                      name="username"
+                      name="name"
                       onChange={handleChange}
                     />
-                    <label className="text-gray-500">Senha:</label>
+                    <label className="text-gray-500">Quantidade:</label>
                     <input
                       type="text"
                       className="border-color"
-                      name="password"
+                      name="qnty"
                       onChange={handleChange}
                     />{" "}
                     <br />
-                    <label className="text-gray-500">Nível de Acesso:</label>
-                    <select
+                    <label className="text-gray-500">Quantidade Mínima:</label>
+                    <input
                       type="text"
                       className="border-color"
-                      name="role"
+                      name="minQnty"
                       onChange={handleChange}
-                    >
-                        <option selected disabled></option>
-                        <option value="admin">Admin</option>
-                        <option value="veterinario">Veterinário</option>
-                        <option value="farmaceutico">Farmacêutico</option>
-                        <option value="usuario">Usuário</option>
-                    </select>
+                    />
+                    <label className="text-gray-500">Tipo de Unidade:</label>
+                    <input
+                      type="text"
+                      className="border-color"
+                      name="descQnty"
+                      onChange={handleChange}
+                    />{" "}
+                    <br />
+                    <label className="text-gray-500">Valor da Unidade:</label>
+                    <input
+                      type="text"
+                      className="border-color"
+                      name="valueOfInput"
+                      placeholder="Exemplo: 00.00"
+                      onChange={handleChange}
+                    />
+                    <label className="text-gray-500">Data de Validade:</label>
+                    <input
+                      type="text"
+                      className="border-color"
+                      name="validity"
+                      placeholder="Exemplo: DD-MM-YYYY"
+                      onChange={handleChange}
+                    />{" "}
+                    <br />
+                    <label className="text-gray-500">Lote:</label>
+                    <input
+                      type="text"
+                      className="border-color"
+                      name="lote"
+                      onChange={handleChange}
+                    />{" "}
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -140,4 +168,4 @@ const CreateUser = () => {
   );
 };
 
-export default CreateUser;
+export default ModalCreateMedicine;

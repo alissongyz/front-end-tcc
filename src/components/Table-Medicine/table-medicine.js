@@ -16,7 +16,7 @@ import {
 import "../../styles/table-modal-styles.css";
 import { useStyles } from "../../styles/table";
 
-const TableMaterial = () => {
+const TableMedicine = () => {
   const classes = useStyles();
 
   const [data, setData] = useState([]);
@@ -40,34 +40,35 @@ const TableMaterial = () => {
     setModalPatch(!showModalPatch);
   };
 
-  const [materialSelected, setMaterialSelected] = useState({
+  const [medicineSelected, setMedicineSelected] = useState({
     uuid: "",
     name: "",
     qnty: "",
-    descQnty: "",
     minQnty: "",
-    unitValue: "",
-    expiration: "",
+    descQnty: "",
+    valueOfInput: "",
+    validity: "",
+    lote: "",
   });
 
   const selectMaterial = (material, option) => {
-    setMaterialSelected(material);
+    setMedicineSelected(material);
     option === "Editar" && openCloseModalPatch();
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setMaterialSelected({
-      ...materialSelected,
+    setMedicineSelected({
+      ...medicineSelected,
       [name]: value,
     });
-    console.log(materialSelected);
+    console.log(medicineSelected);
   };
 
   const getAll = async () => {
     await api
-      .get("material")
+      .get("medicines")
       .then((res) => {
         setData(res.data);
       })
@@ -78,20 +79,21 @@ const TableMaterial = () => {
 
   const updateMaterial = async () => {
     await api
-      .patch("material/" + materialSelected.uuid, materialSelected)
+      .patch("medicines/" + medicineSelected.uuid, medicineSelected)
       .then((res) => {
         var response = res.data;
         var dataAux = data;
 
         // eslint-disable-next-line array-callback-return
-        dataAux.map((material) => {
-          if (material.uuid === materialSelected.uuid) {
-            material.name = response.name;
-            material.qnty = response.qnty;
-            material.descQnty = response.descQnty;
-            material.minQnty = response.minQnty;
-            material.unitValue = response.unitValue;
-            material.expiration = response.expiration;
+        dataAux.map((medicine) => {
+          if (medicine.uuid === medicineSelected.uuid) {
+            medicine.name = response.name;
+            medicine.qnty = response.qnty;
+            medicine.descQnty = response.descQnty;
+            medicine.minQnty = response.minQnty;
+            medicine.valueOfInput = response.unitValue;
+            medicine.validity = response.expiration;
+            medicine.lote = response.lote;
           }
         });
         setUpdateData(true);
@@ -117,7 +119,7 @@ const TableMaterial = () => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.tableHeaderCell}>
-                  Nome do Material
+                  Nome do Medicamento
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
                   Quantidade
@@ -133,6 +135,9 @@ const TableMaterial = () => {
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
                   Data de Validade
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Lote
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>Ações</TableCell>
               </TableRow>
@@ -154,13 +159,16 @@ const TableMaterial = () => {
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography>{row.unitValue}</Typography>
+                      <Typography>{row.valueOfInput}</Typography>
                     </TableCell>
                     <TableCell>
                       <Typography>{row.descQnty}</Typography>
                     </TableCell>
                     <TableCell>
-                      {moment(row.dateRegister).format("DD-MM-YYYY")}
+                      <Typography>{moment(row.validity).format("DD-MM-YYYY")}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography>{row.lote}</Typography>
                     </TableCell>
                     <TableCell>
                       <Typography>
@@ -219,14 +227,14 @@ const TableMaterial = () => {
                       className="border-color"
                       name="name"
                       onChange={handleChange}
-                      value={materialSelected && materialSelected.name}
+                      value={medicineSelected && medicineSelected.name}
                     />
                     <label className="text-gray-500">Quantidade:</label>
                     <input
                       type="text"
                       className="border-color-quantity"
                       readOnly
-                      value={materialSelected && materialSelected.qnty}
+                      value={medicineSelected && medicineSelected.qnty}
                     />{" "}
                     <br />
                     <label className="text-gray-500">Quantidade Mínima:</label>
@@ -235,7 +243,7 @@ const TableMaterial = () => {
                       className="border-color"
                       name="minQnty"
                       onChange={handleChange}
-                      value={materialSelected && materialSelected.minQnty}
+                      value={medicineSelected && medicineSelected.minQnty}
                     />
                     <label className="text-gray-500">Tipo de Unidade:</label>
                     <input
@@ -243,7 +251,7 @@ const TableMaterial = () => {
                       className="border-color"
                       name="descQnty"
                       onChange={handleChange}
-                      value={materialSelected && materialSelected.descQnty}
+                      value={medicineSelected && medicineSelected.descQnty}
                     />{" "}
                     <br />
                     <label className="text-gray-500">Valor da Unidade:</label>
@@ -252,20 +260,31 @@ const TableMaterial = () => {
                       className="border-color"
                       name="unitValue"
                       onChange={handleChange}
-                      value={materialSelected && materialSelected.unitValue}
+                      value={medicineSelected && medicineSelected.valueOfInput}
                     />
                     <label className="text-gray-500">Data de Validade:</label>
                     <input
                       type="text"
                       className="border-color"
-                      name="expiration"
+                      name="validity"
                       onChange={handleChange}
                       value={
-                        materialSelected &&
-                        moment(materialSelected.expiration).format("DD-MM-YYYY")
+                        medicineSelected &&
+                        moment(medicineSelected.validity).format("DD-MM-YYYY")
                       }
                     />{" "}
                     <br />
+                    <label className="text-gray-500">Lote:</label>
+                    <input
+                      type="text"
+                      className="border-color"
+                      name="validity"
+                      onChange={handleChange}
+                      value={
+                        medicineSelected &&
+                        medicineSelected.lote
+                      }
+                    />{" "}
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -298,4 +317,4 @@ const TableMaterial = () => {
   );
 };
 
-export default TableMaterial;
+export default TableMedicine;
