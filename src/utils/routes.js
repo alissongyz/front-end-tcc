@@ -7,6 +7,7 @@ import Material from "../pages/Materials/Materials";
 import User from "../pages/User/Users";
 import Login from "../pages/Login/Login";
 import Medicine from "../pages/Medicines/Medicines";
+import Orders from "../pages/Orders/Orders";
 
 function PathRoutes() {
   return (
@@ -18,6 +19,7 @@ function PathRoutes() {
         <Route path="/material" element={<Material />} />
         <Route path="/medicine" element={<Medicine />} />
         <Route path="/users" element={<User />} />
+        <Route path="/consult-order" element={<Orders />} />
       </Routes>
     </BrowserRouter>
   );

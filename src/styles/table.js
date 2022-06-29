@@ -10,9 +10,14 @@ export const useStyles = makeStyles((theme) => ({
     maxWidth: "80%",
   },
   tableHeaderCell: {
+    textAlign: "center",
     fontWeight: "bold",
     backgroundColor: "#2D8AE0",
     color: theme.palette.getContrastText(theme.palette.primary.dark),
+  },
+  tableCell: {
+    textAlign: "center",
+    fontWeight: "bold",
   },
   status: {
     fontWeight: "bold",
@@ -20,7 +25,7 @@ export const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: "grey",
     borderRadius: 8,
-    padding: "3px 10px",
+    padding: "8px 16px",
     display: "inline-block",
   },
 }));

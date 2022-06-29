@@ -23,7 +23,7 @@ const TableMedicine = () => {
   const [updateData, setUpdateData] = useState(true);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -231,7 +231,7 @@ const TableMedicine = () => {
                     />
                     <label className="text-gray-500">Quantidade:</label>
                     <input
-                      type="text"
+                      type="number"
                       className="border-color-quantity"
                       readOnly
                       value={medicineSelected && medicineSelected.qnty}
@@ -239,7 +239,7 @@ const TableMedicine = () => {
                     <br />
                     <label className="text-gray-500">Quantidade Mínima:</label>
                     <input
-                      type="text"
+                      type="number"
                       className="border-color"
                       name="minQnty"
                       onChange={handleChange}
@@ -264,7 +264,7 @@ const TableMedicine = () => {
                     />
                     <label className="text-gray-500">Data de Validade:</label>
                     <input
-                      type="text"
+                      type="date"
                       className="border-color"
                       name="validity"
                       onChange={handleChange}

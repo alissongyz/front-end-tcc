@@ -24,7 +24,7 @@ const TableUser = () => {
   const [updateData, setUpdateData] = useState(true);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

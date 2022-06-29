@@ -26,13 +26,8 @@ export const SideBarData = [
         icon: <RiIcons.RiDashboardLine />,
     },
     {
-        title: 'Solicitar Saída de Medicamento',
-        path: '/teste',
-        icon: <AiIcons.AiOutlinePullRequest />,
-    },
-    {
         title: 'Consultar Solicitações',
-        path: '/teste',
+        path: '/consult-order',
         icon: <CgIcons.CgScreen />,
     },
     {

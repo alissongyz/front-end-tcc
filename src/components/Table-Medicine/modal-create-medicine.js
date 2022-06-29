@@ -38,6 +38,23 @@ const ModalCreateMedicine = () => {
     console.log(medicineSelected);
   };
 
+  const [orderSelected, setOrderSelected] = useState({
+    uuid: "",
+    itemName: "",
+    qnty: "",
+    motive: "",
+  });
+
+  const handleChangeOrder = (e) => {
+    const { name, value } = e.target;
+
+    setOrderSelected({
+      ...orderSelected,
+      [name]: value,
+    });
+    console.log(orderSelected);
+  };
+
   const createMedicine = async () => {
     delete medicineSelected.uuid;
     await api
@@ -53,9 +70,9 @@ const ModalCreateMedicine = () => {
   };
 
   const createOrder = async () => {
-    delete medicineSelected.uuid;
+    delete orderSelected.uuid;
     await api
-      .post("order", medicineSelected)
+      .post("order", orderSelected)
       .then((res) => {
         setData(data.concat(res.data));
         setUpdateData(true);
@@ -222,14 +239,14 @@ const ModalCreateMedicine = () => {
                       type="text"
                       className="border-color"
                       name="name"
-                      onChange={handleChange}
+                      onChange={handleChangeOrder}
                     />
                     <label className="text-gray-500">Quantidade:</label>
                     <input
                       type="text"
                       className="border-color"
                       name="qnty"
-                      onChange={handleChange}
+                      onChange={handleChangeOrder}
                     />{" "}
                     <br />
                     <label className="text-gray-500">
@@ -239,7 +256,7 @@ const ModalCreateMedicine = () => {
                       type="text"
                       className="border-color"
                       name="motive"
-                      onChange={handleChange}
+                      onChange={handleChangeOrder}
                     />
                   </div>
                   {/*footer*/}
