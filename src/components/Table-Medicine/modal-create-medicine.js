@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api";
+import Dropdown from "./dropdown";
 import "../../styles/table-modal-styles.css";
 
 const ModalCreateMedicine = () => {
   const [data, setData] = useState([]);
-  const [dataName, setDataName] = useState([]);
   const [, setUpdateData] = useState(true);
+
+  const [value, setValue] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
   const [showModalMedicine, setShowModalMedicine] = useState(false);
@@ -56,6 +58,17 @@ const ModalCreateMedicine = () => {
     console.log(orderSelected);
   };
 
+  const getAll = async () => {
+    await api
+      .get("medicines")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const createMedicine = async () => {
     delete medicineSelected.uuid;
     await api
@@ -85,20 +98,8 @@ const ModalCreateMedicine = () => {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line no-unused-vars
-    const getAll = async () => {
-      await api
-        .get("medicines")
-        .then((res) => {
-          setDataName(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  
-        console.log(dataName);
-    };
-  }, [dataName]);
+    getAll();
+  }, []);
 
   return (
     <>
@@ -249,19 +250,13 @@ const ModalCreateMedicine = () => {
                   </div>
                   {/*body*/}
                   <div className="relative p-6 flex-auto">
-                    <label className="text-gray-500">
-                      Medicamento:
-                    </label>
-                    <select
-                      type="text"
-                      className="border-color"
-                      name="itemName"
-                      onChange={handleChangeOrder}
-                    >
-                       {dataName.map((row) => (
-                        <option value={row.name}>{row.name}</option>
-                        ))}
-                    </select>
+                    <label className="text-gray-500">Medicamento:</label>
+                    <Dropdown
+                      options={data}
+                      prompt="Selecione um medicamento..."
+                      value={value}
+                      onChangeCapture={(val) => setValue(val)}
+                    />
                     <label className="text-gray-500">Quantidade:</label>
                     <input
                       type="text"

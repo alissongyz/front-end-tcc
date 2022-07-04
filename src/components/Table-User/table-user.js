@@ -115,7 +115,8 @@ const TableUser = () => {
       setData(search);
     } else {
       const filterResult = search.filter((item) =>
-        item.username.toLowerCase().includes(e.target.value.toLowerCase())
+        item.username.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.role.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setData(filterResult);
     }
@@ -125,22 +126,22 @@ const TableUser = () => {
   return (
     <>
       <CreateUser />
-      <div class="flex justify-center">
+      <div className="flex justify-center">
         <nav className="hidden md:flex items-center justify-center md:flex-1 lg:w-0">
-          <div class="relative text-gray-600 focus-within:text-gray-400 mb-3 xl:w-96">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+          <div className="relative text-gray-600 focus-within:text-gray-400 mb-3 xl:w-96">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
               <button
                 type="submit"
-                class="p-1 focus:outline-none focus:shadow-outline"
+                className="p-1 focus:outline-none focus:shadow-outline"
               >
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                 >
                   <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
@@ -152,7 +153,7 @@ const TableUser = () => {
               className="block w-full px-3 py-1.5 border border-solid border-gray-300
               rounded-md pl-10 transition
               ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              placeholder="Pesquisar por nome..."
+              placeholder="Pesquisar usuário"
               value={filter}
               onInput={(e) => handleFilter(e)}
             />
@@ -180,7 +181,7 @@ const TableUser = () => {
               {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
-                  <TableRow key={row.username}>
+                  <TableRow key={row.uuid}>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.username}</Typography>
                     </TableCell>
@@ -211,8 +212,8 @@ const TableUser = () => {
                 count={data.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </TableFooter>
           </Table>

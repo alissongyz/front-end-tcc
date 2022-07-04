@@ -122,7 +122,7 @@ const TableOrder = () => {
               {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
-                  <TableRow key={row.askedBy}>
+                  <TableRow key={row.uuid}>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.askedBy}</Typography>
                     </TableCell>

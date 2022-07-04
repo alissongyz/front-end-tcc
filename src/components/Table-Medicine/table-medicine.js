@@ -146,7 +146,7 @@ const TableMedicine = () => {
               {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
-                  <TableRow key={row.name}>
+                  <TableRow key={row.uuid}>
                     <TableCell className={classes.tableCell}>
                       <Typography>
                         {row.name}
@@ -191,8 +191,8 @@ const TableMedicine = () => {
                 count={data.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </TableFooter>
           </Table>
