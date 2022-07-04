@@ -188,7 +188,7 @@ const TableUser = () => {
                       <Typography>{row.role}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {moment(row.dateRegister).format("DD-MM-YYYY")}
+                      {moment(row.dateRegister).format("DD/MM/YYYY")}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>

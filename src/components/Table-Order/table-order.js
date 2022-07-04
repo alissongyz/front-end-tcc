@@ -63,6 +63,7 @@ const TableOrder = () => {
       });
   };
 
+  // eslint-disable-next-line no-unused-vars
   const updateOrder = async () => {
     await api
       .patch("order/" + orderSelected.uuid, orderSelected)

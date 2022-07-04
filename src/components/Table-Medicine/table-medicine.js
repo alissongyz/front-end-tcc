@@ -165,7 +165,7 @@ const TableMedicine = () => {
                       <Typography>{row.descQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{moment(row.validity).format("DD-MM-YYYY")}</Typography>
+                      <Typography>{moment(row.validity).format("DD/MM/YYYY")}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.lote}</Typography>

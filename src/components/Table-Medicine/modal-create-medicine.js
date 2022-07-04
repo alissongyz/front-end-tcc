@@ -18,20 +18,6 @@ const ModalCreateMedicine = () => {
     setShowModalMedicine(!showModalMedicine);
   };
 
-  const getAll = async () => {
-    await api
-      .get("medicines")
-      .then((res) => {
-        setDataName(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-      console.log(dataName);
-  };
-
-
   const [medicineSelected, setMedicineSelected] = useState({
     uuid: "",
     name: "",
@@ -99,8 +85,20 @@ const ModalCreateMedicine = () => {
   };
 
   useEffect(() => {
-      getAll();
-  }, []);
+    // eslint-disable-next-line no-unused-vars
+    const getAll = async () => {
+      await api
+        .get("medicines")
+        .then((res) => {
+          setDataName(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  
+        console.log(dataName);
+    };
+  }, [dataName]);
 
   return (
     <>
@@ -264,12 +262,6 @@ const ModalCreateMedicine = () => {
                         <option value={row.name}>{row.name}</option>
                         ))}
                     </select>
-                    {/* <input
-                      type="text"
-                      className="border-color"
-                      name="name"
-                      onChange={handleChangeOrder}
-                    /> */}
                     <label className="text-gray-500">Quantidade:</label>
                     <input
                       type="text"
