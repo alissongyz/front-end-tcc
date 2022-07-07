@@ -26,6 +26,14 @@ const TableUser = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
+  const token = localStorage.getItem("auth");
+
+  const authorization = {
+    headers: {
+      auth: `${token}`,
+    },
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -65,21 +73,9 @@ const TableUser = () => {
     console.log(setUserSelected);
   };
 
-  const getAll = async () => {
-    await api
-      .get("user")
-      .then((res) => {
-        setData(res.data);
-        setSearchValue(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const updateMaterial = async () => {
     await api
-      .patch("user/" + userSelected.id, userSelected)
+      .patch("user/" + userSelected.id, userSelected, authorization)
       .then((res) => {
         var response = res.data;
         var dataAux = data;
@@ -100,13 +96,6 @@ const TableUser = () => {
       });
   };
 
-  useEffect(() => {
-    if (updateData) {
-      getAll();
-      setUpdateData(false);
-    }
-  }, [updateData]);
-
   const [filter, setFilterValue] = useState("");
   const [search, setSearchValue] = useState([]);
 
@@ -122,6 +111,29 @@ const TableUser = () => {
     }
     setFilterValue(e.target.value);
   };
+
+  useEffect(() => {
+    const getAll = async () => {
+      await api
+        .get("medicines", {
+          headers: {
+            auth: `${token}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data);
+          setSearchValue(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    if (updateData) {
+      getAll();
+      setUpdateData(false);
+    }
+  }, [token, updateData]);
 
   return (
     <>

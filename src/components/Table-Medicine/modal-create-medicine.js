@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import api from "../../utils/api";
 import Dropdown from "./dropdown";
 import "../../styles/table-modal-styles.css";
@@ -43,6 +43,7 @@ const ModalCreateMedicine = () => {
 
   const [orderSelected, setOrderSelected] = useState({
     uuid: "",
+    username: "",
     itemName: "",
     qnty: "",
     motive: "",
@@ -55,24 +56,20 @@ const ModalCreateMedicine = () => {
       ...orderSelected,
       [name]: value,
     });
-    console.log(orderSelected);
   };
 
-  const getAll = async () => {
-    await api
-      .get("medicines")
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const token = localStorage.getItem('auth');
+
+  const authorization = {
+      headers : {
+        auth : `${token}`
+      }
+  }
 
   const createMedicine = async () => {
     delete medicineSelected.uuid;
     await api
-      .post("medicines", medicineSelected)
+      .post("medicines", medicineSelected, authorization)
       .then((res) => {
         setData(data.concat(res.data));
         setUpdateData(true);
@@ -82,11 +79,11 @@ const ModalCreateMedicine = () => {
         console.log(error);
       });
   };
-
+  
   const createOrder = async () => {
     delete orderSelected.uuid;
     await api
-      .post("order", orderSelected)
+      .post("order", orderSelected, authorization)
       .then((res) => {
         setData(data.concat(res.data));
         setUpdateData(true);
@@ -96,10 +93,6 @@ const ModalCreateMedicine = () => {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    getAll();
-  }, []);
 
   return (
     <>

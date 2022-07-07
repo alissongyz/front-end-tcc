@@ -56,6 +56,14 @@ const TableMedicine = () => {
     option === "Editar" && openCloseModalPatch();
   };
 
+  const token = localStorage.getItem("auth");
+
+  const authorization = {
+    headers: {
+      auth: `${token}`,
+    },
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -63,24 +71,15 @@ const TableMedicine = () => {
       ...medicineSelected,
       [name]: value,
     });
-    console.log(medicineSelected);
-  };
-
-  const getAll = async () => {
-    await api
-      .get("medicines")
-      .then((res) => {
-        setData(res.data);
-        setSearchValue(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   const updateMaterial = async () => {
     await api
-      .patch("medicines/" + medicineSelected.uuid, medicineSelected)
+      .patch(
+        "medicines/" + medicineSelected.uuid,
+        medicineSelected,
+        authorization
+      )
       .then((res) => {
         var response = res.data;
         var dataAux = data;
@@ -112,10 +111,11 @@ const TableMedicine = () => {
     if (e.target.value === "") {
       setData(search);
     } else {
-      const filterResult = search.filter((item) =>
-        item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        item.validity.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        item.lote.toLowerCase().includes(e.target.value.toLowerCase())
+      const filterResult = search.filter(
+        (item) =>
+          item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          item.validity.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          item.lote.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setData(filterResult);
     }
@@ -123,15 +123,31 @@ const TableMedicine = () => {
   };
 
   useEffect(() => {
+    const getAll = async () => {
+      await api
+        .get("medicines", {
+          headers: {
+            auth: `${token}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data);
+          setSearchValue(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     if (updateData) {
       getAll();
       setUpdateData(false);
     }
-  }, [updateData]);
+  }, [token, updateData]);
 
   return (
     <>
-         <div className="flex justify-center">
+      <div className="flex justify-center">
         <nav className="hidden md:flex items-center justify-center md:flex-1 lg:w-0">
           <div className="relative text-gray-600 focus-within:text-gray-400 mb-3 xl:w-96">
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -188,9 +204,7 @@ const TableMedicine = () => {
                 <TableCell className={classes.tableHeaderCell}>
                   Data de Validade
                 </TableCell>
-                <TableCell className={classes.tableHeaderCell}>
-                  Lote
-                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>Lote</TableCell>
                 <TableCell className={classes.tableHeaderCell}>Ações</TableCell>
               </TableRow>
             </TableHead>
@@ -200,9 +214,7 @@ const TableMedicine = () => {
                 .map((row) => (
                   <TableRow key={row.uuid}>
                     <TableCell className={classes.tableCell}>
-                      <Typography>
-                        {row.name}
-                      </Typography>
+                      <Typography>{row.name}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.qnty}</Typography>
@@ -217,7 +229,9 @@ const TableMedicine = () => {
                       <Typography>{row.descQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{moment(row.validity).format("DD/MM/YYYY")}</Typography>
+                      <Typography>
+                        {moment(row.validity).format("DD/MM/YYYY")}
+                      </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.lote}</Typography>
@@ -332,10 +346,7 @@ const TableMedicine = () => {
                       className="border-color"
                       name="validity"
                       onChange={handleChange}
-                      value={
-                        medicineSelected &&
-                        medicineSelected.lote
-                      }
+                      value={medicineSelected && medicineSelected.lote}
                     />{" "}
                   </div>
                   {/*footer*/}

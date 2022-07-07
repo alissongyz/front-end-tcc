@@ -25,6 +25,14 @@ const TableMaterial = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
+  const token = localStorage.getItem("auth");
+
+  const authorization = {
+    headers: {
+      auth: `${token}`,
+    },
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -65,21 +73,13 @@ const TableMaterial = () => {
     console.log(materialSelected);
   };
 
-  const getAll = async () => {
-    await api
-      .get("material")
-      .then((res) => {
-        setData(res.data);
-        setSearchValue(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const updateMaterial = async () => {
     await api
-      .patch("material/" + materialSelected.uuid, materialSelected)
+      .patch(
+        "material/" + materialSelected.uuid,
+        materialSelected,
+        authorization
+      )
       .then((res) => {
         var response = res.data;
         var dataAux = data;
@@ -110,10 +110,11 @@ const TableMaterial = () => {
     if (e.target.value === "") {
       setData(search);
     } else {
-      const filterResult = search.filter((item) =>
-        item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        item.descQnty.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        item.expiration.toLowerCase().includes(e.target.value.toLowerCase())
+      const filterResult = search.filter(
+        (item) =>
+          item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          item.descQnty.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          item.expiration.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setData(filterResult);
     }
@@ -121,15 +122,31 @@ const TableMaterial = () => {
   };
 
   useEffect(() => {
+    const getAll = async () => {
+      await api
+        .get("material", {
+          headers: {
+            auth: `${token}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data);
+          setSearchValue(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     if (updateData) {
       getAll();
       setUpdateData(false);
     }
-  }, [updateData]);
+  }, [token, updateData]);
 
   return (
     <>
-    <div className="flex justify-center">
+      <div className="flex justify-center">
         <nav className="hidden md:flex items-center justify-center md:flex-1 lg:w-0">
           <div className="relative text-gray-600 focus-within:text-gray-400 mb-3 xl:w-96">
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -195,9 +212,7 @@ const TableMaterial = () => {
                 .map((row) => (
                   <TableRow key={row.uuid}>
                     <TableCell className={classes.tableCell}>
-                      <Typography>
-                        {row.name}
-                      </Typography>
+                      <Typography>{row.name}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.qnty}</Typography>

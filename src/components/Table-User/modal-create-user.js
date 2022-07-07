@@ -7,6 +7,14 @@ const CreateUser = () => {
   const [, setUpdateData] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
+  const token = localStorage.getItem("auth");
+
+  const authorization = {
+    headers: {
+      auth: `${token}`,
+    },
+  };
+
   const openCloseModal = () => {
     setShowModal(!showModal);
   };
@@ -33,7 +41,7 @@ const CreateUser = () => {
   const createMaterial = async () => {
     delete userSelected.uuid;
     await api
-      .post("user", userSelected)
+      .post("user", userSelected, authorization)
       .then((res) => {
         setData(data.concat(res.data));
         setUpdateData(true);

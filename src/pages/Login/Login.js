@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [cookies, setCookie] = useCookies(["auth"]);
+  const [, setCookie] = useCookies(["auth"]);
   const navigate = useNavigate();
 
   let [passError, setPassError] = useState();
@@ -15,25 +15,26 @@ export default function Login() {
 
   const [userSelected, setUserSelected] = useState({
     username: "",
-    password: ""
+    password: "",
   });
-
 
   const autenticateUser = async () => {
     await api
       .post("auth/login", userSelected)
       .then((res) => {
-          setCookie("auth", res.data.token, {
-            path: "/"
-          });
-          setPassError();
-          setUserError();
-          navigate('/home');
+        console.log("usuário da sessão", res.data);
+        setCookie("auth", res.data.token, {
+          sameSite: "lax",
+          path: "/",
+        });
+        setPassError();
+        setUserError();
+        navigate("/home");
       })
       .catch((error) => {
-        if(error.response.status === 400){
+        if (error.response.status === 400) {
           setPassError(true);
-        } else if(error.response.status === 401) {
+        } else if (error.response.status === 401) {
           setUserError(true);
         }
       });
@@ -46,17 +47,17 @@ export default function Login() {
       ...userSelected,
       [name]: value,
     });
-    console.log(userSelected);
   };
-
 
   return (
     <>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <FaLastfmSquare className= "mx-auto h-12 w-auto" color="#2D8AE0" /> 
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Entre com sua conta</h2>
+            <FaLastfmSquare className="mx-auto h-12 w-auto" color="#2D8AE0" />
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              Entre com sua conta
+            </h2>
           </div>
           <div className="mt-8 space-y-6">
             <input type="hidden" name="remember" defaultValue="true" />
@@ -71,12 +72,14 @@ export default function Login() {
                   type="username"
                   autoComplete="username"
                   required
-                  className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${userError ? "userError" : ""}`}
+                  className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${
+                    userError ? "userError" : ""
+                  }`}
                   placeholder="Username"
                   onChange={handleChange}
                 />
               </div>
-              <div >
+              <div>
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>
@@ -86,7 +89,9 @@ export default function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${passError ? "passError" : ""}`}
+                  className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${
+                    passError ? "passError" : ""
+                  }`}
                   placeholder="Password"
                   onChange={handleChange}
                 />
@@ -100,7 +105,11 @@ export default function Login() {
                 onClick={() => autenticateUser()}
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <IconContext.Provider value={{ color: "#5e5e60" }} className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                  <IconContext.Provider
+                    value={{ color: "#5e5e60" }}
+                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                    aria-hidden="true"
+                  />
                 </span>
                 Sign in
               </button>
@@ -109,5 +118,5 @@ export default function Login() {
         </div>
       </div>
     </>
-  )
+  );
 }

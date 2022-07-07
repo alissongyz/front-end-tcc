@@ -7,6 +7,14 @@ const ModalCreateMaterial = () => {
   const [, setUpdateData] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
+  const token = localStorage.getItem("auth");
+
+  const authorization = {
+    headers: {
+      auth: `${token}`,
+    },
+  };
+
   const openCloseModal = () => {
     setShowModal(!showModal);
   };
@@ -34,7 +42,7 @@ const ModalCreateMaterial = () => {
   const createMaterial = async () => {
     delete materialSelected.uuid;
     await api
-      .post("material", materialSelected)
+      .post("material", materialSelected, authorization)
       .then((res) => {
         setData(data.concat(res.data));
         setUpdateData(true);

@@ -24,6 +24,14 @@ const TableOrder = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(12);
 
+  const token = localStorage.getItem("auth");
+
+  const authorization = {
+    headers: {
+      auth: `${token}`,
+    },
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -52,21 +60,10 @@ const TableOrder = () => {
     dateUpdated: "",
   });
 
-  const getAll = async () => {
-    await api
-      .get("order")
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   // eslint-disable-next-line no-unused-vars
   const updateOrder = async () => {
     await api
-      .patch("order/" + orderSelected.uuid, orderSelected)
+      .patch("order/" + orderSelected.uuid, orderSelected, authorization)
       .then((res) => {
         var dataAux = data;
 
@@ -84,11 +81,26 @@ const TableOrder = () => {
   };
 
   useEffect(() => {
+    const getAll = async () => {
+      await api
+        .get("order", {
+          headers: {
+            auth: `${token}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     if (updateData) {
       getAll();
       setUpdateData(false);
     }
-  }, [updateData]);
+  }, [token, updateData]);
 
   return (
     <>
