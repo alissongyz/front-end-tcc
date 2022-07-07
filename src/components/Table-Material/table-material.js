@@ -70,6 +70,7 @@ const TableMaterial = () => {
       .get("material")
       .then((res) => {
         setData(res.data);
+        setSearchValue(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -102,6 +103,23 @@ const TableMaterial = () => {
       });
   };
 
+  const [filter, setFilterValue] = useState("");
+  const [search, setSearchValue] = useState([]);
+
+  const handleFilter = async (e) => {
+    if (e.target.value === "") {
+      setData(search);
+    } else {
+      const filterResult = search.filter((item) =>
+        item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.descQnty.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.expiration.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setData(filterResult);
+    }
+    setFilterValue(e.target.value);
+  };
+
   useEffect(() => {
     if (updateData) {
       getAll();
@@ -111,6 +129,40 @@ const TableMaterial = () => {
 
   return (
     <>
+    <div className="flex justify-center">
+        <nav className="hidden md:flex items-center justify-center md:flex-1 lg:w-0">
+          <div className="relative text-gray-600 focus-within:text-gray-400 mb-3 xl:w-96">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+              <button
+                type="submit"
+                className="p-1 focus:outline-none focus:shadow-outline"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  className="w-6 h-6"
+                >
+                  <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </button>
+            </span>
+            <input
+              type="search"
+              name="q"
+              className="block w-full px-3 py-1.5 border border-solid border-gray-300
+              rounded-md pl-10 transition
+              ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              placeholder="Pesquisar..."
+              value={filter}
+              onInput={(e) => handleFilter(e)}
+            />
+          </div>
+        </nav>
+      </div>
       <div className="flex justify-center">
         <TableContainer component={Paper} className={classes.tableContainer}>
           <Table className={classes.table} aria-label="simple table">
