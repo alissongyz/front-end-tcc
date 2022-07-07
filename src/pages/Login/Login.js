@@ -22,11 +22,7 @@ export default function Login() {
     await api
       .post("auth/login", userSelected)
       .then((res) => {
-        console.log("usuário da sessão", res.data);
-        setCookie("auth", res.data.token, {
-          sameSite: "lax",
-          path: "/",
-        });
+        localStorage.setItem('auth', res.data.token);
         setPassError();
         setUserError();
         navigate("/home");
