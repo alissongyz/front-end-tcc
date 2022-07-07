@@ -26,7 +26,7 @@ export const SideBarData = [
         icon: <RiIcons.RiDashboardLine />,
     },
     {
-        title: 'Pedidos Pendentes',
+        title: 'Consultar Solicitações',
         path: '/consult-order',
         icon: <CgIcons.CgScreen />,
     },
