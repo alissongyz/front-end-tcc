@@ -154,7 +154,7 @@ const TableMaterial = () => {
               className="block w-full px-3 py-1.5 border border-solid border-gray-300
               rounded-md pl-10 transition
               ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              placeholder="Pesquisar"
+              placeholder="Pesquisar..."
               value={filter}
               onInput={(e) => handleFilter(e)}
             />
