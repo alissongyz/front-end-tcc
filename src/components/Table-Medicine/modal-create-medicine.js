@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../../utils/api";
-import Dropdown from "./dropdown";
 import "../../styles/table-modal-styles.css";
+import moment from "moment";
 
 const ModalCreateMedicine = () => {
   const [data, setData] = useState([]);
-  const [, setUpdateData] = useState(true);
+  const [updateData, setUpdateData] = useState(true);
 
-  const [value, setValue] = useState(null);
+  const [select, ]  = useState('');
 
   const [showModal, setShowModal] = useState(false);
   const [showModalMedicine, setShowModalMedicine] = useState(false);
@@ -43,7 +43,6 @@ const ModalCreateMedicine = () => {
 
   const [orderSelected, setOrderSelected] = useState({
     uuid: "",
-    username: "",
     itemName: "",
     qnty: "",
     motive: "",
@@ -56,15 +55,17 @@ const ModalCreateMedicine = () => {
       ...orderSelected,
       [name]: value,
     });
+
+    console.log(`${moment().format("DD-MM-YYYY hh:mm:ss")} -> Requisição send criada:`, orderSelected)
   };
 
-  const token = localStorage.getItem('auth');
+  const token = localStorage.getItem("auth");
 
   const authorization = {
-      headers : {
-        auth : `${token}`
-      }
-  }
+    headers: {
+      auth: `${token}`,
+    },
+  };
 
   const createMedicine = async () => {
     delete medicineSelected.uuid;
@@ -79,7 +80,7 @@ const ModalCreateMedicine = () => {
         console.log(error);
       });
   };
-  
+
   const createOrder = async () => {
     delete orderSelected.uuid;
     await api
@@ -93,6 +94,28 @@ const ModalCreateMedicine = () => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    const getAll = async () => {
+      await api
+        .get("medicines", {
+          headers: {
+            auth: `${token}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    if (updateData) {
+      getAll();
+      setUpdateData(false);
+    }
+  }, [token, updateData]);
 
   return (
     <>
@@ -244,12 +267,17 @@ const ModalCreateMedicine = () => {
                   {/*body*/}
                   <div className="relative p-6 flex-auto">
                     <label className="text-gray-500">Medicamento:</label>
-                    <Dropdown
-                      options={data}
-                      prompt="Selecione um medicamento..."
-                      value={value}
-                      onChangeCapture={(val) => setValue(val)}
-                    />
+                    <select
+                      className="border-color"
+                      disabled={false}
+                      value={select}
+                      onChange={handleChangeOrder}
+                      name="itemName"
+                    >
+                      {data.map((item) => (
+                        <option key={item.uuid}>{item.name}</option>
+                      ))}
+                    </select>
                     <label className="text-gray-500">Quantidade:</label>
                     <input
                       type="text"

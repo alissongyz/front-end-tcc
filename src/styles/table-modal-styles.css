@@ -1,6 +1,10 @@
 * {
     font-family: Arial, Helvetica, sans-serif;
   }
+
+  select {
+    overflow-y:auto;
+  }
   
   .content-table {
     border-collapse: collapse;

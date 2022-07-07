@@ -22,7 +22,7 @@ const TableOrder = () => {
   const [updateData, setUpdateData] = useState(true);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(12);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const token = localStorage.getItem("auth");
 
@@ -178,13 +178,13 @@ const TableOrder = () => {
             </TableBody>
             <TableFooter>
               <TablePagination
-                rowsPerPageOptions={[12, 15, 20]}
+                rowsPerPageOptions={[8, 10, 15]}
                 component="div"
                 count={data.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </TableFooter>
           </Table>
