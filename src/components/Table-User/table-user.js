@@ -115,7 +115,7 @@ const TableUser = () => {
   useEffect(() => {
     const getAll = async () => {
       await api
-        .get("medicines", {
+        .get("user", {
           headers: {
             auth: `${token}`,
           },
