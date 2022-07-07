@@ -105,12 +105,6 @@ const TableMedicine = () => {
       });
   };
 
-  useEffect(() => {
-    if (updateData) {
-      getAll();
-      setUpdateData(false);
-    }
-  }, [updateData]);
   const [filter, setFilterValue] = useState("");
   const [search, setSearchValue] = useState([]);
 
@@ -120,12 +114,21 @@ const TableMedicine = () => {
     } else {
       const filterResult = search.filter((item) =>
         item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.validity.toLowerCase().includes(e.target.value.toLowerCase()) ||
         item.lote.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setData(filterResult);
     }
     setFilterValue(e.target.value);
   };
+
+  useEffect(() => {
+    if (updateData) {
+      getAll();
+      setUpdateData(false);
+    }
+  }, [updateData]);
+
   return (
     <>
          <div className="flex justify-center">

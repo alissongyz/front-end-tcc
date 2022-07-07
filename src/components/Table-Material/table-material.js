@@ -103,12 +103,6 @@ const TableMaterial = () => {
       });
   };
 
-  useEffect(() => {
-    if (updateData) {
-      getAll();
-      setUpdateData(false);
-    }
-  }, [updateData]);
   const [filter, setFilterValue] = useState("");
   const [search, setSearchValue] = useState([]);
 
@@ -125,6 +119,14 @@ const TableMaterial = () => {
     }
     setFilterValue(e.target.value);
   };
+
+  useEffect(() => {
+    if (updateData) {
+      getAll();
+      setUpdateData(false);
+    }
+  }, [updateData]);
+
   return (
     <>
     <div className="flex justify-center">
