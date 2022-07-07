@@ -56,14 +56,6 @@ const TableMedicine = () => {
     option === "Editar" && openCloseModalPatch();
   };
 
-  const token = localStorage.getItem("auth");
-
-  const authorization = {
-    headers: {
-      auth: `${token}`,
-    },
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -71,6 +63,16 @@ const TableMedicine = () => {
       ...medicineSelected,
       [name]: value,
     });
+  };
+
+  const token = localStorage.getItem("auth");
+
+  console.log("token:", token)
+
+  const authorization = {
+    headers: {
+      auth: `${token}`,
+    },
   };
 
   const updateMaterial = async () => {

@@ -3,11 +3,9 @@ import { IconContext } from "react-icons/lib";
 import { FaLastfmSquare } from "react-icons/fa";
 import api from "../../utils/api";
 import React, { useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [, setCookie] = useCookies(["auth"]);
   const navigate = useNavigate();
 
   let [passError, setPassError] = useState();
@@ -22,6 +20,7 @@ export default function Login() {
     await api
       .post("auth/login", userSelected)
       .then((res) => {
+        console.log("token session:", res.data)
         localStorage.setItem('auth', res.data.token);
         setPassError();
         setUserError();

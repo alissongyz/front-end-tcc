@@ -34,8 +34,8 @@ const Navbar = () => {
               return (
                 <NavText key={index}>
                   <Link to={item.path}>
-                    <div className="text-[1.5rem]">{item.icon}</div>
-                    <span className="ml-4">{item.title}</span>
+                    <div className="text-[1.5rem]" onClick={showSidebar}>{item.icon}</div>
+                    <span className="ml-4" onClick={showSidebar}>{item.title}</span>
                   </Link>
                 </NavText>
               );
