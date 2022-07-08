@@ -299,7 +299,7 @@ const TableMedicine = () => {
                     />
                     <label className="text-gray-500">Quantidade:</label>
                     <input
-                      type="number"
+                      type="text"
                       className="border-color-quantity"
                       readOnly
                       value={medicineSelected && medicineSelected.qnty}
@@ -307,7 +307,7 @@ const TableMedicine = () => {
                     <br />
                     <label className="text-gray-500">Quantidade Mínima:</label>
                     <input
-                      type="number"
+                      type="text"
                       className="border-color"
                       name="minQnty"
                       onChange={handleChange}
@@ -332,7 +332,7 @@ const TableMedicine = () => {
                     />
                     <label className="text-gray-500">Data de Validade:</label>
                     <input
-                      type="date"
+                      type="text"
                       className="border-color"
                       name="validity"
                       onChange={handleChange}
