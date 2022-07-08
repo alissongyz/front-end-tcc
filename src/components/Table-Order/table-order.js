@@ -24,6 +24,36 @@ const TableOrder = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
+  const [showModalPatch, setModalPatch] = useState(false);
+  const [showModalDelete, setModalDelete] = useState(false);
+
+  const openCloseModalPatch = () => {
+    setModalPatch(!showModalPatch);
+  };
+
+  const openCloseModalDelete = () => {
+    setModalDelete(!showModalDelete);
+  };
+
+  const [orderSelected, setOrderSelected] = useState({
+    uuid: "",
+    askedBy: "",
+    approvedBy: "",
+    itemName: "",
+    qnty: "",
+    motive: "",
+    status: "",
+    deleted: "",
+    dateRegister: "",
+    dateUpdated: "",
+  });
+
+  const selectOrder = (order, option) => {
+    setOrderSelected(order);
+    option === "Editar" && openCloseModalPatch();
+    option === "Excluir" && openCloseModalDelete();
+  };
+
   const token = localStorage.getItem("auth");
 
   const authorization = {
@@ -41,39 +71,26 @@ const TableOrder = () => {
     setPage(0);
   };
 
-  const [showModalPatch, setModalPatch] = useState(false);
-
-  const openCloseModalPatch = () => {
-    setModalPatch(!showModalPatch);
-  };
-
-  const [orderSelected, ] = useState({
-    uuid: "",
-    askedBy: "",
-    approvedBy: "",
-    itemName: "",
-    qnty: "",
-    motive: "",
-    status: "",
-    deleted: "",
-    dateRegister: "",
-    dateUpdated: "",
-  });
-
-  // eslint-disable-next-line no-unused-vars
   const updateOrder = async () => {
     await api
       .patch("order/" + orderSelected.uuid, orderSelected, authorization)
       .then((res) => {
-        var dataAux = data;
-
-        // eslint-disable-next-line array-callback-return
-        dataAux.map((order) => {
-          if (order.uuid === orderSelected.uuid) {
-          }
-        });
+        setData(data.filter((order) => order.uuid !== res.data));
         setUpdateData(true);
         openCloseModalPatch();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const deleteOrder = async () => {
+    await api
+      .delete("order/" + orderSelected.uuid, authorization)
+      .then((res) => {
+        setData(data.filter((order) => order.uuid !== res.data));
+        setUpdateData(true);
+        openCloseModalDelete();
       })
       .catch((error) => {
         console.log(error);
@@ -113,9 +130,6 @@ const TableOrder = () => {
                   Solicitado Por
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
-                  Aprovado Por
-                </TableCell>
-                <TableCell className={classes.tableHeaderCell}>
                   Nome do Medicamento
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
@@ -137,9 +151,6 @@ const TableOrder = () => {
                   <TableRow key={row.uuid}>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.askedBy}</Typography>
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      <Typography>{row.approvedBy}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.itemName}</Typography>
@@ -167,10 +178,18 @@ const TableOrder = () => {
                       <Typography>
                         <button
                           className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
-                    rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
+                    rounded-md shadow-sm text-base font-normal text-white bg-[#22C55E] active:bg-[#2D8AE0] hover:bg-[#15803D]"
+                          onClick={() => selectOrder(row, "Editar")}
                         >
-                          Autorizar Saída
-                        </button>{" "}
+                          Aprovar
+                        </button>
+                        <button
+                          className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
+                    rounded-md shadow-sm text-base font-normal text-white bg-[#EF4444] active:bg-[#2D8AE0] hover:bg-[#DC2626]"
+                          onClick={() => selectOrder(row, "Excluir")}
+                        >
+                          Reprovar
+                        </button>
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -189,6 +208,102 @@ const TableOrder = () => {
             </TableFooter>
           </Table>
         </TableContainer>
+
+        {/*MODAL DE ATUALIZAÇÃO*/}
+        {showModalPatch ? (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                {/*content*/}
+                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                  {/*header*/}
+                  <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                    <h3 className="text-3xl font-semibold text-gray-[#2D8AE0]">
+                      Você tem certeza disso?
+                    </h3>
+                    <button
+                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                      onClick={() => setModalPatch(false)}
+                    >
+                      <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  {/*footer*/}
+                  <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                    <button
+                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setModalPatch(false)}
+                    >
+                      Fechar
+                    </button>
+                    <button
+                      className="bg-[#2D8AE0] hover:bg-[#2d89e0d2] font-bold uppercase text-sm px-6 py-3 rounded shadow 
+                      outline-none text-white focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => {
+                        updateOrder();
+                      }}
+                    >
+                      Confirmar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </>
+        ) : null}
+
+        {/*MODAL DE REPROVAR PERDIDO*/}
+        {showModalDelete ? (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                {/*content*/}
+                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                  {/*header*/}
+                  <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                    <h3 className="text-3xl font-semibold text-gray-[#2D8AE0]">
+                      [Delete] Você tem certeza disso?
+                    </h3>
+                    <button
+                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                      onClick={() => setModalDelete(false)}
+                    >
+                      <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  {/*footer*/}
+                  <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                    <button
+                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setModalDelete(false)}
+                    >
+                      Fechar
+                    </button>
+                    <button
+                      className="bg-[#2D8AE0] hover:bg-[#2d89e0d2] font-bold uppercase text-sm px-6 py-3 rounded shadow 
+                      outline-none text-white focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => {
+                        deleteOrder();
+                      }}
+                    >
+                      Confirmar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </>
+        ) : null}
       </div>
     </>
   );
