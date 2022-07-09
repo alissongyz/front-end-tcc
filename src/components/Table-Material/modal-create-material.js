@@ -11,6 +11,16 @@ const ModalCreateMaterial = () => {
     setShowModal(!showModal);
   };
 
+  const convertValue = (valor) => {
+    var valor_atualizado = parseFloat(valor.replace(',' , '.')).toLocaleString('pt-BR', {minimumFractionDigits: 2,  maximumFractionDigits: 2}).replace(',' , '.');
+    return valor_atualizado
+  };
+
+  const convertDate = (data) => {
+    var data_atualizada = data.replace('/' , '-')
+    return data_atualizada
+  };
+
   const [materialSelected, setMaterialSelected] = useState({
     uuid: "",
     name: "",
@@ -33,6 +43,8 @@ const ModalCreateMaterial = () => {
 
   const createMaterial = async () => {
     delete materialSelected.uuid;
+    materialSelected.unitValue = convertValue(materialSelected.unitValue)
+    materialSelected.expiration = convertDate(materialSelected.expiration)
     await api
       .post("material", materialSelected)
       .then((res) => {
@@ -115,18 +127,18 @@ const ModalCreateMaterial = () => {
                     <br />
                     <label className="text-gray-500">Valor da Unidade:</label>
                     <input
-                      type="text"
+                      type="number"
                       className="border-color"
                       name="unitValue"
-                      placeholder="Exemplo: 00.00"
+                      placeholder="Exemplo: 00,00"
                       onChange={handleChange}
                     />
                     <label className="text-gray-500">Data de Validade:</label>
                     <input
-                      type="text"
+                      type="date"
                       className="border-color"
                       name="expiration"
-                      placeholder="Exemplo: DD-MM-YYYY"
+                      placeholder="Exemplo: DD/MM/YYYY"
                       onChange={handleChange}
                     />{" "}
                     <br />
