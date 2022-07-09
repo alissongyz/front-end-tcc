@@ -3,6 +3,7 @@ import * as AiIcons from 'react-icons/ai';
 import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
 import * as CgIcons from 'react-icons/cg';
+import * as BiIcons from 'react-icons/bi';
 
 export const SideBarData = [
     {
@@ -26,7 +27,7 @@ export const SideBarData = [
         icon: <RiIcons.RiDashboardLine />,
     },
     {
-        title: 'Consultar Solicitações',
+        title: 'Pedidos Pendentes',
         path: '/consult-order',
         icon: <CgIcons.CgScreen />,
     },
@@ -44,5 +45,10 @@ export const SideBarData = [
         title: 'Contato',
         path: '/contact',
         icon: <MdIcons.MdCall />,
+    },
+    {
+        title: 'Sair',
+        path: '/',
+        icon: <BiIcons.BiLogOut />,
     }
 ]

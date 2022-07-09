@@ -105,12 +105,6 @@ const TableMedicine = () => {
       });
   };
 
-  useEffect(() => {
-    if (updateData) {
-      getAll();
-      setUpdateData(false);
-    }
-  }, [updateData]);
   const [filter, setFilterValue] = useState("");
   const [search, setSearchValue] = useState([]);
 
@@ -120,12 +114,21 @@ const TableMedicine = () => {
     } else {
       const filterResult = search.filter((item) =>
         item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.validity.toLowerCase().includes(e.target.value.toLowerCase()) ||
         item.lote.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setData(filterResult);
     }
     setFilterValue(e.target.value);
   };
+
+  useEffect(() => {
+    if (updateData) {
+      getAll();
+      setUpdateData(false);
+    }
+  }, [updateData]);
+
   return (
     <>
          <div className="flex justify-center">
@@ -155,7 +158,7 @@ const TableMedicine = () => {
               className="block w-full px-3 py-1.5 border border-solid border-gray-300
               rounded-md pl-10 transition
               ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              placeholder="Pesquisar usuário"
+              placeholder="Pesquisar..."
               value={filter}
               onInput={(e) => handleFilter(e)}
             />
