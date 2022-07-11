@@ -38,7 +38,7 @@ const TableOrder = () => {
 
   const [orderSelected, setOrderSelected] = useState({
     uuid: "",
-    askedBy: "",
+    requiredBy: "",
     approvedBy: "",
     itemName: "",
     qnty: "",
@@ -151,7 +151,7 @@ const TableOrder = () => {
                 .map((row) => (
                   <TableRow key={row.uuid}>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{row.askedBy}</Typography>
+                      <Typography>{row.requiredBy}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.itemName}</Typography>
@@ -220,7 +220,7 @@ const TableOrder = () => {
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold">
-                      Você tem certeza que desejar aprovar o pedido pendente de {orderSelected.askedBy}?
+                      Você tem certeza que desejar aprovar o pedido pendente de {orderSelected.requiredBy}?
                     </h3>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -268,7 +268,7 @@ const TableOrder = () => {
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <p className="text-3xl font-semibold text-red-500">
-                      Você tem certeza que desejar reprovar o pedido pendente de {orderSelected.askedBy}?
+                      Você tem certeza que desejar reprovar o pedido pendente de {orderSelected.requiredBy}?
                     </p>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
