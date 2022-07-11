@@ -1,7 +1,7 @@
 import React from 'react';
 import * as AiIcons from 'react-icons/ai';
 import * as RiIcons from 'react-icons/ri';
-import * as MdIcons from 'react-icons/md';
+// import * as MdIcons from 'react-icons/md';
 import * as CgIcons from 'react-icons/cg';
 import * as BiIcons from 'react-icons/bi';
 
@@ -36,16 +36,16 @@ export const SideBarData = [
         path: '/teste2',
         icon: <AiIcons.AiOutlineSolution />,
     },
-    {
-        title: 'Sobre Nós',
-        path: '/aboutus',
-        icon: <AiIcons.AiOutlineBook />,
-    },
-    {
-        title: 'Contato',
-        path: '/contact',
-        icon: <MdIcons.MdCall />,
-    },
+    // {
+    //     title: 'Sobre Nós',
+    //     path: '/aboutus',
+    //     icon: <AiIcons.AiOutlineBook />,
+    // },
+    // {
+    //     title: 'Contato',
+    //     path: '/contact',
+    //     icon: <MdIcons.MdCall />,
+    // },
     {
         title: 'Sair',
         path: '/',

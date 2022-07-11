@@ -13,6 +13,7 @@ import {
   TableFooter,
 } from "@material-ui/core";
 import "../../styles/table-modal-styles.css";
+import * as CgIcons from 'react-icons/cg';
 import { useStyles } from "../../styles/table";
 
 const TableOrder = () => {
@@ -181,14 +182,14 @@ const TableOrder = () => {
                     rounded-md shadow-sm text-base font-normal text-white bg-[#22C55E] active:bg-[#2D8AE0] hover:bg-[#15803D]"
                           onClick={() => selectOrder(row, "Editar")}
                         >
-                          Aprovar
+                          <CgIcons.CgCheckO />
                         </button>
                         <button
                           className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
                     rounded-md shadow-sm text-base font-normal text-white bg-[#EF4444] active:bg-[#2D8AE0] hover:bg-[#DC2626]"
                           onClick={() => selectOrder(row, "Excluir")}
                         >
-                          Reprovar
+                          <CgIcons.CgCloseO />
                         </button>
                       </Typography>
                     </TableCell>

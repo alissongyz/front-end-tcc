@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { IconContext } from "react-icons/lib";
 
 import { SideBarData } from "../../utils/SideBarData";
+import "../../styles/global.css"
 import { NavbarMenu, NavMenu, NavText, ShowSidebarButton } from "./styles";
 
 const Navbar = () => {
@@ -32,12 +33,12 @@ const Navbar = () => {
             </li>
             {SideBarData.map((item, index) => {
               return (
-                <NavText key={index}>
-                  <Link to={item.path}>
-                    <div className="text-[1.5rem]" onClick={showSidebar}>{item.icon}</div>
-                    <span className="ml-4" onClick={showSidebar}>{item.title}</span>
-                  </Link>
-                </NavText>
+                <Link className="button-edited" to={item.path}>
+                  <NavText key={index}>
+                      <div className="text-[1.5rem]" onClick={showSidebar}>{item.icon}</div>
+                      <span className="ml-4" onClick={showSidebar}>{item.title}</span>
+                  </NavText>
+                </Link>
               );
             })}
           </ul>

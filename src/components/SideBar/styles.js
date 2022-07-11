@@ -41,6 +41,7 @@ export const NavText = styled.div`
   margin: 8px 16px;
   border-radius: 4px;
   list-style: none;
+  cursor: pointer;
 
   a {
     display: flex;
