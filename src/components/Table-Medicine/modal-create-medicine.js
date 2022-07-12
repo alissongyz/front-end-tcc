@@ -12,6 +12,17 @@ const ModalCreateMedicine = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalMedicine, setShowModalMedicine] = useState(false);
 
+  const convertValue = (valor) => {
+    var valor_atualizado = parseFloat(valor.replace(',' , '.')).toLocaleString('pt-BR', {minimumFractionDigits: 2,  maximumFractionDigits: 2}).replace(',' , '.');
+    return valor_atualizado
+  };
+
+  const convertDate = (data) => {
+    var data_atualizada = data.replace('/' , '-')
+    return data_atualizada
+  };
+
+
   const openCloseModal = () => {
     setShowModal(!showModal);
   };
@@ -71,6 +82,8 @@ const ModalCreateMedicine = () => {
 
   const createMedicine = async () => {
     delete medicineSelected.uuid;
+    medicineSelected.unitValue = convertValue(medicineSelected.unitValue)
+    medicineSelected.expiration = convertDate(medicineSelected.expiration)
     await api
       .post("medicines", medicineSelected)
       .then((res) => {
@@ -179,18 +192,18 @@ const ModalCreateMedicine = () => {
                     <br />
                     <label className="text-gray-500">Valor da Unidade:</label>
                     <input
-                      type="text"
+                      type="number"
                       className="border-color"
                       name="valueOfInput"
-                      placeholder="Exemplo: 00.00"
+                      placeholder="Exemplo: 00,00"
                       onChange={handleChange}
                     />
                     <label className="text-gray-500">Data de Validade:</label>
                     <input
-                      type="text"
+                      type="date"
                       className="border-color"
                       name="validity"
-                      placeholder="Exemplo: DD-MM-YYYY"
+                      placeholder="Exemplo: DD/MM/YYYY"
                       onChange={handleChange}
                     />{" "}
                     <br />

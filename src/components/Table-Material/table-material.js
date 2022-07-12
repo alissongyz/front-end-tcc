@@ -300,7 +300,7 @@ const TableMaterial = () => {
                     <br />
                     <label className="text-gray-500">Valor da Unidade:</label>
                     <input
-                      type="text"
+                      type="number"
                       className="border-color"
                       name="unitValue"
                       onChange={handleChange}
