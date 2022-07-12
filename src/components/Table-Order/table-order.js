@@ -13,7 +13,7 @@ import {
   TableFooter,
 } from "@material-ui/core";
 import "../../styles/table-modal-styles.css";
-import * as CgIcons from 'react-icons/cg';
+import * as CgIcons from "react-icons/cg";
 import { useStyles } from "../../styles/table";
 
 const TableOrder = () => {
@@ -128,6 +128,9 @@ const TableOrder = () => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.tableHeaderCell}>
+                  Nº do Pedido
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
                   Solicitado Por
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
@@ -135,9 +138,6 @@ const TableOrder = () => {
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
                   Quantidade
-                </TableCell>
-                <TableCell className={classes.tableHeaderCell}>
-                  Motivo
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
                   Status
@@ -151,6 +151,9 @@ const TableOrder = () => {
                 .map((row) => (
                   <TableRow key={row.uuid}>
                     <TableCell className={classes.tableCell}>
+                      <Typography>{row.nroOrder}</Typography>
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Typography>{row.requiredBy}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
@@ -158,9 +161,6 @@ const TableOrder = () => {
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.qnty}</Typography>
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      <Typography>{row.motive}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography
@@ -179,7 +179,7 @@ const TableOrder = () => {
                       <Typography>
                         <button
                           className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
-                    rounded-md shadow-sm text-base font-normal text-white bg-[#22C55E] active:bg-[#2D8AE0] hover:bg-[#15803D]"
+                    rounded-md shadow-sm text-base font-normal text-white bg-[#22C55E] active:bg-[#2D8AE0] hover:bg-[#16A34A]"
                           onClick={() => selectOrder(row, "Editar")}
                         >
                           <CgIcons.CgCheckO />
@@ -219,8 +219,8 @@ const TableOrder = () => {
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                    <h3 className="text-3xl font-semibold">
-                      Você tem certeza que desejar aprovar o pedido pendente de {orderSelected.requiredBy}?
+                    <h3 className="text-3xl font-semibold text-[#22C55E]">
+                      Confirmar saída
                     </h3>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -230,6 +230,24 @@ const TableOrder = () => {
                         ×
                       </span>
                     </button>
+                  </div>
+                  {/* BODY */}
+                  <div className="relative p-6 flex-auto">
+                    <p className="text-gray-500">
+                      Nº do Pedido: {orderSelected.nroOrder}
+                    </p>
+                    <p className="text-gray-500">
+                      Solicitante: {orderSelected.requiredBy}
+                    </p>
+                    <p className="text-gray-500">
+                      Nome do item: {orderSelected.itemName}
+                    </p>
+                    <p className="text-gray-500">
+                      Quantidade: {orderSelected.qnty}
+                    </p>
+                    <p className="text-gray-500">
+                      Motivo: {orderSelected.motive}
+                    </p>
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -241,7 +259,7 @@ const TableOrder = () => {
                       Fechar
                     </button>
                     <button
-                      className="bg-[#2D8AE0] hover:bg-[#2d89e0d2] font-bold uppercase text-sm px-6 py-3 rounded shadow 
+                      className="bg-[#22C55E] active:bg-[#2D8AE0] hover:bg-[#16A34A] font-bold uppercase text-sm px-6 py-3 rounded shadow 
                       outline-none text-white focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       onClick={() => {
@@ -268,7 +286,7 @@ const TableOrder = () => {
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <p className="text-3xl font-semibold text-red-500">
-                      Você tem certeza que desejar reprovar o pedido pendente de {orderSelected.requiredBy}?
+                      Reprovar saída
                     </p>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -278,6 +296,24 @@ const TableOrder = () => {
                         ×
                       </span>
                     </button>
+                  </div>
+                  {/* BODY */}
+                  <div className="relative p-6 flex-auto">
+                    <p className="text-gray-500">
+                      Nº do Pedido: {orderSelected.nroOrder}
+                    </p>
+                    <p className="text-gray-500">
+                      Solicitante: {orderSelected.requiredBy}
+                    </p>
+                    <p className="text-gray-500">
+                      Nome do item: {orderSelected.itemName}
+                    </p>
+                    <p className="text-gray-500">
+                      Quantidade: {orderSelected.qnty}
+                    </p>
+                    <p className="text-gray-500">
+                      Motivo: {orderSelected.motive}
+                    </p>
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -289,7 +325,7 @@ const TableOrder = () => {
                       Fechar
                     </button>
                     <button
-                      className="bg-[#2D8AE0] hover:bg-[#2d89e0d2] font-bold uppercase text-sm px-6 py-3 rounded shadow 
+                      className="bg-[#EF4444] active:bg-[#2D8AE0] hover:bg-[#DC2626] font-bold uppercase text-sm px-6 py-3 rounded shadow 
                       outline-none text-white focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       onClick={() => {
