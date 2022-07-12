@@ -294,7 +294,7 @@ const TableUser = () => {
                         updateMaterial();
                       }}
                     >
-                      Atualizar Dados
+                      Confirmar
                     </button>
                   </div>
                 </div>

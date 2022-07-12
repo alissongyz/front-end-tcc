@@ -351,7 +351,7 @@ const TableMaterial = () => {
                         updateMaterial();
                       }}
                     >
-                      Atualizar Dados
+                      Confirmar
                     </button>
                   </div>
                 </div>

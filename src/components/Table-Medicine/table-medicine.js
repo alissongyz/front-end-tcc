@@ -368,7 +368,7 @@ const TableMedicine = () => {
                         updateMaterial();
                       }}
                     >
-                      Atualizar Dados
+                      Confirmar
                     </button>
                   </div>
                 </div>
