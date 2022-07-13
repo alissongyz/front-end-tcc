@@ -211,7 +211,7 @@ const TableMedicine = () => {
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{row.valueOfInput}</Typography>
+                      <Typography>R${row.valueOfInput.toFixed(2).replace('.',',')}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.descQnty}</Typography>
@@ -308,7 +308,7 @@ const TableMedicine = () => {
                     <br />
                     <label className="text-gray-500">Valor da Unidade:</label>
                     <input
-                      type="text"
+                      type="number"
                       className="border-color"
                       name="unitValue"
                       onChange={handleChange}

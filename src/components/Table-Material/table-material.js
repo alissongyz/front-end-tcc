@@ -206,7 +206,7 @@ const TableMaterial = () => {
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{row.unitValue}</Typography>
+                      <Typography>R${row.unitValue.toFixed(2).replace('.',',')}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.descQnty}</Typography>
