@@ -25,11 +25,11 @@ const TableMaterial = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem("x-access-token");
 
   const authorization = {
     headers: {
-      auth: `${token}`,
+      'x-access-token': `${token}`,
     },
   };
 
@@ -126,7 +126,7 @@ const TableMaterial = () => {
       await api
         .get("material", {
           headers: {
-            auth: `${token}`,
+            'x-access-token': `${token}`,
           },
         })
         .then((res) => {

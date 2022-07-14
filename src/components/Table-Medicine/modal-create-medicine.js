@@ -59,11 +59,11 @@ const ModalCreateMedicine = () => {
     console.log(`${moment().format("DD-MM-YYYY hh:mm:ss")} -> Requisição send criada:`, orderSelected)
   };
 
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem("x-access-token");
 
   const authorization = {
     headers: {
-      auth: `${token}`,
+      'x-access-token': `${token}`,
     },
   };
 
@@ -100,7 +100,7 @@ const ModalCreateMedicine = () => {
       await api
         .get("medicines", {
           headers: {
-            auth: `${token}`,
+            'x-access-token': `${token}`,
           },
         })
         .then((res) => {

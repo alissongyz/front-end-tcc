@@ -65,13 +65,13 @@ const TableMedicine = () => {
     });
   };
 
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem("x-access-token");
 
   console.log("token:", token)
 
   const authorization = {
     headers: {
-      auth: `${token}`,
+      'x-access-token': `${token}`,
     },
   };
 
@@ -129,7 +129,7 @@ const TableMedicine = () => {
       await api
         .get("medicines", {
           headers: {
-            auth: `${token}`,
+            'x-access-token': `${token}`,
           },
         })
         .then((res) => {

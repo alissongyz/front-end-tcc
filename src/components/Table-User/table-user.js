@@ -26,11 +26,11 @@ const TableUser = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem("x-access-token");
 
   const authorization = {
     headers: {
-      auth: `${token}`,
+      'x-access-token': `${token}`,
     },
   };
 
@@ -117,7 +117,7 @@ const TableUser = () => {
       await api
         .get("user", {
           headers: {
-            auth: `${token}`,
+            'x-access-token': `${token}`,
           },
         })
         .then((res) => {

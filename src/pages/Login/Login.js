@@ -20,8 +20,7 @@ export default function Login() {
     await api
       .post("auth/login", userSelected)
       .then((res) => {
-        console.log("token session:", res.data)
-        localStorage.setItem('auth', res.data.token);
+        localStorage.setItem('x-access-token', res.data.token);
         setPassError();
         setUserError();
         navigate("/home");

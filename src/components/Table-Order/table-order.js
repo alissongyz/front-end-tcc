@@ -55,11 +55,11 @@ const TableOrder = () => {
     option === "Excluir" && openCloseModalDelete();
   };
 
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem("x-access-token");
 
   const authorization = {
     headers: {
-      auth: `${token}`,
+      'x-access-token': `${token}`,
     },
   };
 
@@ -103,7 +103,7 @@ const TableOrder = () => {
       await api
         .get("order", {
           headers: {
-            auth: `${token}`,
+            'x-access-token': `${token}`,
           },
         })
         .then((res) => {

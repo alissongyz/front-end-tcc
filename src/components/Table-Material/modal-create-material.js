@@ -7,11 +7,11 @@ const ModalCreateMaterial = () => {
   const [, setUpdateData] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  const token = localStorage.getItem("auth");
+  const token = localStorage.getItem("x-access-token");
 
   const authorization = {
     headers: {
-      auth: `${token}`,
+      "x-access-token": `${token}`,
     },
   };
 
