@@ -225,7 +225,7 @@ const TableMedicine = () => {
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{row.valueOfInput}</Typography>
+                      <Typography>R${row.valueOfInput.toFixed(2).replace('.', ',')}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.descQnty}</Typography>
@@ -328,19 +328,8 @@ const TableMedicine = () => {
                       className="border-color"
                       name="unitValue"
                       onChange={handleChange}
-                      value={medicineSelected && medicineSelected.valueOfInput}
+                      value={medicineSelected && medicineSelected.valueOfInput.toFixed(2).replace('.', ',')}
                     />
-                    <label className="text-gray-500">Data de Validade:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="validity"
-                      onChange={handleChange}
-                      value={
-                        medicineSelected &&
-                        moment(medicineSelected.validity).format("DD-MM-YYYY")
-                      }
-                    />{" "}
                     <br />
                     <label className="text-gray-500">Lote:</label>
                     <input

@@ -126,15 +126,14 @@ const ModalCreateMaterial = () => {
                       type="text"
                       className="border-color"
                       name="unitValue"
-                      placeholder="Exemplo: 00.00"
+                      placeholder="Exemplo: 00,00"
                       onChange={handleChange}
                     />
                     <label className="text-gray-500">Data de Validade:</label>
                     <input
-                      type="text"
+                      type="date"
                       className="border-color"
                       name="expiration"
-                      placeholder="Exemplo: DD-MM-YYYY"
                       onChange={handleChange}
                     />{" "}
                     <br />

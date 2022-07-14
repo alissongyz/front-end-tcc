@@ -221,7 +221,7 @@ const TableMaterial = () => {
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{row.unitValue}</Typography>
+                      <Typography>R${row.unitValue.toFixed(2).replace('.',',')}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.descQnty}</Typography>
@@ -319,20 +319,8 @@ const TableMaterial = () => {
                       className="border-color"
                       name="unitValue"
                       onChange={handleChange}
-                      value={materialSelected && materialSelected.unitValue}
+                      value={materialSelected && materialSelected.unitValue.toFixed(2).replace('.',',')}
                     />
-                    <label className="text-gray-500">Data de Validade:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="expiration"
-                      onChange={handleChange}
-                      value={
-                        materialSelected &&
-                        moment(materialSelected.expiration).format("DD-MM-YYYY")
-                      }
-                    />{" "}
-                    <br />
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
