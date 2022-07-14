@@ -8,8 +8,10 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const navigate = useNavigate();
 
-  let [passError, setPassError] = useState();
-  let [userError, setUserError] = useState();
+  const [status, setStatus] = useState({
+    type: "",
+    message: "",
+  });
 
   const [userSelected, setUserSelected] = useState({
     username: "",
@@ -20,16 +22,22 @@ export default function Login() {
     await api
       .post("auth/login", userSelected)
       .then((res) => {
-        localStorage.setItem('x-access-token', res.data.token);
-        setPassError();
-        setUserError();
+        localStorage.setItem("x-access-token", res.data.token);
+
         navigate("/home");
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          return setStatus({
+            type: "error",
+            mensagem: "Erro: É necessário informar um nome de usuário válido.",
+          });
+        }
         if (error.response.status === 400) {
-          setPassError(true);
-        } else if (error.response.status === 401) {
-          setUserError(true);
+          return setStatus({
+            type: "error",
+            mensagem: "Erro: Senha inválida, tente novamente.",
+          });
         }
       });
   };
@@ -53,39 +61,44 @@ export default function Login() {
               Entre com a sua conta
             </h2>
           </div>
+
+          {status.type === "error" ? (
+            <p
+              className="items-center justify-center"
+              style={{ color: "#ff0000" }}
+            >
+              {status.mensagem}
+            </p>
+          ) : (
+            ""
+          )}
+
           <div className="mt-8 space-y-6">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
-                <label className="text-gray-500">
-                  Nome de usuário:
-                </label>
+                <label className="text-gray-500">Nome de usuário:</label>
                 <input
                   id="email-address"
                   name="username"
                   type="username"
                   autoComplete="username"
                   required
-                  className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${
-                    userError ? "userError" : ""
-                  }`}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Digite seu nome de usuário aqui"
                   onChange={handleChange}
                 />
               </div>
               <div>
-                <label className="text-gray-500">
-                  Senha:
-                </label>
+                <label className="text-gray-500">Senha:</label>
                 <input
                   id="password"
                   name="password"
                   type="password"
                   autoComplete="current-password"
                   required
-                  className={`appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${
-                    passError ? "passError" : ""
-                  }`}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900
+                  rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Digite sua senha aqui"
                   onChange={handleChange}
                 />
