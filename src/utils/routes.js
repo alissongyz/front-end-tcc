@@ -8,12 +8,17 @@ import Login from "../pages/Login/Login";
 import Medicine from "../pages/Medicines/Medicines";
 import Orders from "../pages/Orders/Orders";
 import PrivateRoute from "../components/Routes/PrivateRoute";
+import Page404 from "../pages/404/Page-404";
 
 function PathRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* PUBLIC ROUTES */}
         <Route path="/" element={<Login />} />
+        <Route path="*" element={<Page404 />}/>
+        
+        {/* PRIVATE ROUTES */}
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/material" element={<Material />} />
