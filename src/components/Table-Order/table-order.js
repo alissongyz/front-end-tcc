@@ -167,12 +167,10 @@ const TableOrder = () => {
                         className={classes.status}
                         style={{
                           backgroundColor:
-                            (row.status === "PENDING" && "orange") ||
-                            (row.status === "AUTHORIZED" && "green") ||
-                            (row.status === "NOT_AUTHORIZED" && "red"),
+                            (row.status === "PENDING" && "orange") 
                         }}
                       >
-                        {row.status}
+                        {row.status === "PENDING" && "PENDENTE"}
                       </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
