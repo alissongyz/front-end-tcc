@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
+
 import api from "../../utils/api";
 import "../../styles/table-modal-styles.css";
 
 const CreateUser = () => {
   const [data, setData] = useState([]);
-  const [, setUpdateData] = useState(true);
+  const [updateData, setUpdateData] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   const token = localStorage.getItem("x-access-token");
 
   const authorization = {
     headers: {
-      'x-access-token': `${token}`,
+      "x-access-token": `${token}`,
     },
   };
 
@@ -52,6 +54,49 @@ const CreateUser = () => {
       });
   };
 
+  const header = [
+    {
+      label: "Usuário",
+      key: "username",
+    },
+    {
+      label: "Nível de acesso",
+      key: "role",
+    },
+    {
+      label: "Data de Registro",
+      key: "dateRegister",
+    },
+  ];
+
+  const csvReport = {
+    data: data,
+    headers: header,
+    filename: "users.csv",
+  };
+
+  useEffect(() => {
+    const getAll = async () => {
+      await api
+        .get("user", {
+          headers: {
+            "x-access-token": `${token}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    if (updateData) {
+      getAll();
+      setUpdateData(false);
+    }
+  }, [token, updateData]);
+
   return (
     <>
       <div className="flex justify-center">
@@ -61,10 +106,16 @@ const CreateUser = () => {
           </h2>
           <button
             className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
-                            rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
+                       rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
             onClick={() => openCloseModal()}
           >
             Novo Usuário
+          </button>
+          <button
+            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
+                            rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
+          >
+            <CSVLink {...csvReport}>Exportar CSV</CSVLink>
           </button>
         </nav>
         {/*MODAL DE CADASTRO*/}
@@ -112,11 +163,11 @@ const CreateUser = () => {
                       name="role"
                       onChange={handleChange}
                     >
-                        <option selected disabled></option>
-                        <option value="admin">Admin</option>
-                        <option value="veterinario">Veterinário</option>
-                        <option value="farmaceutico">Farmacêutico</option>
-                        <option value="usuario">Usuário</option>
+                      <option selected disabled></option>
+                      <option value="admin">Admin</option>
+                      <option value="veterinario">Veterinário</option>
+                      <option value="farmaceutico">Farmacêutico</option>
+                      <option value="usuario">Usuário</option>
                     </select>
                   </div>
                   {/*footer*/}

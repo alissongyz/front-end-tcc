@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
+
 import api from "../../utils/api";
 import "../../styles/table-modal-styles.css";
 
 const ModalCreateMaterial = () => {
   const [data, setData] = useState([]);
-  const [, setUpdateData] = useState(true);
+  const [updateData, setUpdateData] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   const token = localStorage.getItem("x-access-token");
@@ -53,6 +55,44 @@ const ModalCreateMaterial = () => {
       });
   };
 
+  const header = [
+    { label: "Material", key: "name" },
+    { label: "Quantidade", key: "qnty" },
+    { label: "Quantidade Mínima", key: "minQnty" },
+    { label: "Tipo de Unidade", key: "descQnty" },
+    { label: "Valor da Unidade", key: "unitValue" },
+    { label: "Validade", key: "expiration" },
+    { label: "Data de Registro", key: "dateRegister" },
+  ];
+
+  const csvReport = {
+    data: data,
+    headers: header,
+    filename: "material.csv",
+  };
+
+  useEffect(() => {
+    const getAll = async () => {
+      await api
+        .get("material", {
+          headers: {
+            "x-access-token": `${token}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    if (updateData) {
+      getAll();
+      setUpdateData(false);
+    }
+  }, [token, updateData]);
+
   return (
     <>
       <div className="flex justify-center">
@@ -66,6 +106,12 @@ const ModalCreateMaterial = () => {
             onClick={() => openCloseModal()}
           >
             Novo Material
+          </button>
+          <button
+            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
+                            rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
+          >
+            <CSVLink {...csvReport}>Exportar CSV</CSVLink>
           </button>
         </nav>
         {/*MODAL DE CADASTRO*/}

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
+import moment from "moment";
+
 import api from "../../utils/api";
 import "../../styles/table-modal-styles.css";
-import moment from "moment";
 
 const ModalCreateMedicine = () => {
   const [data, setData] = useState([]);
   const [updateData, setUpdateData] = useState(true);
 
-  const [select, ]  = useState('');
+  const [select] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const [showModalMedicine, setShowModalMedicine] = useState(false);
@@ -56,14 +58,17 @@ const ModalCreateMedicine = () => {
       [name]: value,
     });
 
-    console.log(`${moment().format("DD-MM-YYYY hh:mm:ss")} -> Requisição send criada:`, orderSelected)
+    console.log(
+      `${moment().format("DD-MM-YYYY hh:mm:ss")} -> Requisição send criada:`,
+      orderSelected
+    );
   };
 
   const token = localStorage.getItem("x-access-token");
 
   const authorization = {
     headers: {
-      'x-access-token': `${token}`,
+      "x-access-token": `${token}`,
     },
   };
 
@@ -95,12 +100,29 @@ const ModalCreateMedicine = () => {
       });
   };
 
+  const header = [
+    { label: "Nome do Medicamento", key: "name" },
+    { label: "Quantidade", key: "qnty" },
+    { label: "Quantidade Mínima", key: "minQnty" },
+    { label: "Tipo de Unidade", key: "descQnty" },
+    { label: "Valor da Unidade", key: "valueOfInput" },
+    { label: "Validade", key: "validity" },
+    { label: "Lote", key: "lote" },
+    { label: "Data de Registro", key: "dateRegister" },
+  ];
+
+  const csvReport = {
+    data: data,
+    headers: header,
+    filename: "medicamentos.csv",
+  };
+
   useEffect(() => {
     const getAll = async () => {
       await api
         .get("medicines", {
           headers: {
-            'x-access-token': `${token}`,
+            "x-access-token": `${token}`,
           },
         })
         .then((res) => {
@@ -137,6 +159,12 @@ const ModalCreateMedicine = () => {
             onClick={() => openCloseModalMedicine()}
           >
             Solicitar saída de Medicamento
+          </button>
+          <button
+            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
+                            rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
+          >
+            <CSVLink {...csvReport}>Exportar CSV</CSVLink>
           </button>
         </nav>
 
