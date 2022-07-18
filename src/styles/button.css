@@ -1,0 +1,17 @@
+
+.button {
+  cursor: pointer;
+  height: 40px;
+  padding: 8px;
+  outline: unset;
+  position: relative;
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: unset;
+  border-radius: 0px 4px 4px 0px;
+  font-size: 18px;
+  background-color: #3a4750;
+  color: #fff;
+}

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 
 import api from "../../utils/api";
-import "../../styles/table-modal-styles.css";
 
 const ModalCreateMaterial = () => {
   const [data, setData] = useState([]);

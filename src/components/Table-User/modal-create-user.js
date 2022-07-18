@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CSVLink } from "react-csv";
+import * as VscIcons from "react-icons/vsc";
 
 import api from "../../utils/api";
-import "../../styles/table-modal-styles.css";
+import "../../styles/button.css";
 
 const CreateUser = () => {
   const [data, setData] = useState([]);
@@ -75,6 +76,20 @@ const CreateUser = () => {
     filename: "users.csv",
   };
 
+  /* LÓGICA DE VISUALIZAR A SENHA NO FORMULÁRIO */
+  const inputRef = useRef(null);
+  const [eyeIsClosed, setEyeState] = useState(false);
+
+  const toggleShow = () => {
+    if (inputRef.current.type === "password") {
+      setEyeState(true);
+      inputRef.current.type = "text";
+    } else {
+      setEyeState(false);
+      inputRef.current.type = "password";
+    }
+  };
+
   useEffect(() => {
     const getAll = async () => {
       await api
@@ -122,13 +137,13 @@ const CreateUser = () => {
         {showModal ? (
           <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-              <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="relative w-full max-w-2xl h-full md:h-auto">
                 {/*content*/}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold text-gray-[#2D8AE0]">
-                      Novo Usuário
+                      Usuário
                     </h3>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -140,35 +155,63 @@ const CreateUser = () => {
                     </button>
                   </div>
                   {/*body*/}
-                  <div className="relative p-6 flex-auto">
-                    <label className="text-gray-500">Nome:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="username"
-                      onChange={handleChange}
-                    />
-                    <label className="text-gray-500">Senha:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="password"
-                      onChange={handleChange}
-                    />{" "}
-                    <br />
-                    <label className="text-gray-500">Nível de Acesso:</label>
-                    <select
-                      type="text"
-                      className="border-color"
-                      name="role"
-                      onChange={handleChange}
-                    >
-                      <option selected disabled></option>
-                      <option value="admin">Admin</option>
-                      <option value="veterinario">Veterinário</option>
-                      <option value="farmaceutico">Farmacêutico</option>
-                      <option value="usuario">Usuário</option>
-                    </select>
+                  <div className="p-6 space-y-6">
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                        Usuário
+                      </label>
+                      <input
+                        type="text"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                             sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                              dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        name="username"
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                        Senha
+                      </label>
+                      <div className="md:flex items-center justify-center">
+                        <input
+                          ref={inputRef}
+                          type="password"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                          sm:text-sm rounded-l focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                           dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="password"
+                          onChange={handleChange}
+                          placeholder="••••••••"
+                        />
+                        <button className="button" onClick={toggleShow}>
+                          {eyeIsClosed ? (
+                            <VscIcons.VscEye />
+                          ) : (
+                            <VscIcons.VscEyeClosed />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                        Nível de Acesso:
+                      </label>
+                      <select
+                        type="text"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                         sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        name="role"
+                        onChange={handleChange}
+                      >
+                        <option selected disabled></option>
+                        <option value="admin">Admin</option>
+                        <option value="veterinario">Veterinário</option>
+                        <option value="farmaceutico">Farmacêutico</option>
+                        <option value="usuario">Usuário</option>
+                      </select>
+                    </div>
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

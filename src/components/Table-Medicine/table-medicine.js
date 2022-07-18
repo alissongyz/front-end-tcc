@@ -13,7 +13,6 @@ import {
   TablePagination,
   TableFooter,
 } from "@material-ui/core";
-import "../../styles/table-modal-styles.css";
 import { useStyles } from "../../styles/table";
 
 const TableMedicine = () => {

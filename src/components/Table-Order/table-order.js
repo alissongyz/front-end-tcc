@@ -12,7 +12,6 @@ import {
   TablePagination,
   TableFooter,
 } from "@material-ui/core";
-import "../../styles/table-modal-styles.css";
 import * as CgIcons from "react-icons/cg";
 import { useStyles } from "../../styles/table";
 
