@@ -222,7 +222,7 @@ const TableMedicine = () => {
                         style={{
                           backgroundColor:
                             (row.qnty <= row.minQnty && "red") ||
-                            (row.qnty >= row.minQnty && "limegreen"),
+                            (row.qnty >= row.minQnty && "limegreen")
                         }}
                       >
                         {row.qnty}

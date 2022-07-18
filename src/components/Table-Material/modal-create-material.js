@@ -118,13 +118,13 @@ const ModalCreateMaterial = () => {
         {showModal ? (
           <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-              <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="relative w-full max-w-2xl h-full md:h-auto">
                 {/*content*/}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold text-gray-[#2D8AE0]">
-                      Novo Material
+                      Material
                     </h3>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -136,53 +136,96 @@ const ModalCreateMaterial = () => {
                     </button>
                   </div>
                   {/*body*/}
-                  <div className="relative p-6 flex-auto">
-                    <label className="text-gray-500">Nome:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="name"
-                      onChange={handleChange}
-                    />
-                    <label className="text-gray-500">Quantidade:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="qnty"
-                      onChange={handleChange}
-                    />{" "}
-                    <br />
-                    <label className="text-gray-500">Quantidade Mínima:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="minQnty"
-                      onChange={handleChange}
-                    />
-                    <label className="text-gray-500">Tipo de Unidade:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="descQnty"
-                      onChange={handleChange}
-                    />{" "}
-                    <br />
-                    <label className="text-gray-500">Valor da Unidade:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="unitValue"
-                      placeholder="Exemplo: 00,00"
-                      onChange={handleChange}
-                    />
-                    <label className="text-gray-500">Data de Validade:</label>
-                    <input
-                      type="date"
-                      className="border-color"
-                      name="expiration"
-                      onChange={handleChange}
-                    />{" "}
-                    <br />
+                  <div className="p-6 space-y-6">
+                    <div className="grid grid-cols-6 gap-6">
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Material
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600
+                           block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 
+                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="name"
+                          placeholder="Exemplo: Material"
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Quantidade
+                        </label>
+                        <input
+                          type="number"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600
+                           block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
+                           ark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="qnty"
+                          placeholder="Exemplo: 10"
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Quantidade Mínima
+                        </label>
+                        <input
+                          type="number"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block
+                           w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
+                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="minQnty"
+                          placeholder="Exemplo: 3"
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Valor da Unidade
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                             sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="unitValue"
+                          placeholder="Exemplo: 00,00"
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Tipo de Unidade
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                             sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                              dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="descQnty"
+                          placeholder="Exemplo: UNIDADE"
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Data de Validade
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                             sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                              dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="expiration"
+                          placeholder="Exemplo: YYYY-MM-DD"
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
