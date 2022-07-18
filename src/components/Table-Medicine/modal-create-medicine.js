@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
-import moment from "moment";
 
 import api from "../../utils/api";
 import "../../styles/table-modal-styles.css";
@@ -57,11 +56,6 @@ const ModalCreateMedicine = () => {
       ...orderSelected,
       [name]: value,
     });
-
-    console.log(
-      `${moment().format("DD-MM-YYYY hh:mm:ss")} -> Requisição send criada:`,
-      orderSelected
-    );
   };
 
   const token = localStorage.getItem("x-access-token");
@@ -172,7 +166,7 @@ const ModalCreateMedicine = () => {
         {showModal ? (
           <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-              <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="relative w-full max-w-2xl h-full md:h-auto">
                 {/*content*/}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                   {/*header*/}
@@ -190,60 +184,116 @@ const ModalCreateMedicine = () => {
                     </button>
                   </div>
                   {/*body*/}
-                  <div className="relative p-6 flex-auto">
-                    <label className="text-gray-500">Nome:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="name"
-                      onChange={handleChange}
-                    />
-                    <label className="text-gray-500">Quantidade:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="qnty"
-                      onChange={handleChange}
-                    />{" "}
-                    <br />
-                    <label className="text-gray-500">Quantidade Mínima:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="minQnty"
-                      onChange={handleChange}
-                    />
-                    <label className="text-gray-500">Tipo de Unidade:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="descQnty"
-                      onChange={handleChange}
-                    />{" "}
-                    <br />
-                    <label className="text-gray-500">Valor da Unidade:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="valueOfInput"
-                      placeholder="Exemplo: 00,00"
-                      onChange={handleChange}
-                    />
-                    <label className="text-gray-500">Data de Validade:</label>
-                    <input
-                      type="date"
-                      className="border-color"
-                      name="validity"
-                      onChange={handleChange}
-                    />{" "}
-                    <br />
-                    <label className="text-gray-500">Lote:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="lote"
-                      onChange={handleChange}
-                    />{" "}
+                  <div className="p-6 space-y-6">
+                    <div className="grid grid-cols-6 gap-6">
+                      <div className="col-span-6 sm:col-span-3">
+                        <label
+                          for="first-name"
+                          className="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+                        >
+                          Medicamento
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600
+                           block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 
+                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="name"
+                          onChange={handleChange}
+                          placeholder="Exemplo: Medicamento"
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label
+                          for="last-name"
+                          className="block mb-2 text-sm font-medium text-gray-500 dark:text-white"
+                        >
+                          Quantidade
+                        </label>
+                        <input
+                          type="number"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600
+                           block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
+                           ark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="qnty"
+                          onChange={handleChange}
+                          placeholder="Exemplo: 10"
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Quantidade Mínima
+                        </label>
+                        <input
+                          type="number"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block
+                           w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
+                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="minQnty"
+                          onChange={handleChange}
+                          placeholder="Exemplo: 3"
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Valor da Unidade
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                             sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="valueOfInput"
+                          onChange={handleChange}
+                          placeholder="Exemplo: 00,00"
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Tipo de Unidade
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                             sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                              dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="descQnty"
+                          onChange={handleChange}
+                          placeholder="Exemplo: UNIDADE"
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Lote
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 
+                            text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600
+                             dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="lote"
+                          onChange={handleChange}
+                          placeholder="Exemplo: TST-01"
+                        />
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Data de Validade
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 
+                            text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600
+                             dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="validity"
+                          onChange={handleChange}
+                          placeholder="Exemplo: YYYY-MM-DD"
+                        />
+                      </div>
+                    </div>
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -292,36 +342,53 @@ const ModalCreateMedicine = () => {
                     </button>
                   </div>
                   {/*body*/}
-                  <div className="relative p-6 flex-auto">
-                    <label className="text-gray-500">Medicamento:</label>
-                    <select
-                      className="border-color"
-                      disabled={false}
-                      value={select}
-                      onChange={handleChangeOrder}
-                      name="itemName"
-                    >
-                      {data.map((item) => (
-                        <option key={item.uuid}>{item.name}</option>
-                      ))}
-                    </select>
-                    <label className="text-gray-500">Quantidade:</label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="qnty"
-                      onChange={handleChangeOrder}
-                    />{" "}
-                    <br />
-                    <label className="text-gray-500">
-                      Motivo da solicitação:
-                    </label>
-                    <input
-                      type="text"
-                      className="border-color"
-                      name="motive"
-                      onChange={handleChangeOrder}
-                    />
+                  <div className="p-6 space-y-6">
+                    <div className="grid grid-cols-6 gap-6">
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Medicamento
+                        </label>
+                        <select
+                          className="shadow-sm bg-gray-50 border border-gray-300 
+                           text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600
+                           dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          disabled={false}
+                          value={select}
+                          onChange={handleChangeOrder}
+                          name="itemName"
+                        >
+                          {data.map((item) => (
+                            <option key={item.uuid}>{item.name}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                          Quantidade
+                        </label>
+                        <input
+                          type="text"
+                          className="shadow-sm bg-gray-50 border border-gray-300 
+                            text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600
+                            dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          name="qnty"
+                          onChange={handleChangeOrder}
+                          placeholder="Exemplo: 10"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="lock mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                        Motivo
+                      </label>
+                      <textarea
+                        type="text"
+                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        name="motive"
+                        onChange={handleChangeOrder}
+                        placeholder="Exemplo: Lorem ipsum platea faucibus dapibus enim commodo euismod a molestie sodales enim morbi lectus, odio bibendum luctus accumsan per a at vel sollicitudin vitae turpis."
+                      />
+                    </div>
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

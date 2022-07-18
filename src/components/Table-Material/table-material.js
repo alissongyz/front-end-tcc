@@ -231,7 +231,7 @@ const TableMaterial = () => {
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>
-                        R${row.unitValue.toFixed(2).replace(".", ",")}
+                        R${row.unitValue}
                       </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
@@ -332,7 +332,7 @@ const TableMaterial = () => {
                       onChange={handleChange}
                       value={
                         materialSelected &&
-                        materialSelected.unitValue.toFixed(2).replace(".", ",")
+                        materialSelected.unitValue
                       }
                     />
                   </div>
