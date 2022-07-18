@@ -29,7 +29,7 @@ const TableMaterial = () => {
 
   const authorization = {
     headers: {
-      'x-access-token': `${token}`,
+      "x-access-token": `${token}`,
     },
   };
 
@@ -126,7 +126,7 @@ const TableMaterial = () => {
       await api
         .get("material", {
           headers: {
-            'x-access-token': `${token}`,
+            "x-access-token": `${token}`,
           },
         })
         .then((res) => {
@@ -215,13 +215,24 @@ const TableMaterial = () => {
                       <Typography>{row.name}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{row.qnty}</Typography>
+                      <Typography
+                        className={classes.status}
+                        style={{
+                          backgroundColor:
+                            (row.qnty <= row.minQnty && "red") ||
+                            (row.qnty >= row.minQnty && "limegreen"),
+                        }}
+                      >
+                        {row.qnty}
+                      </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>R${row.unitValue.toFixed(2).replace('.',',')}</Typography>
+                      <Typography>
+                        R${row.unitValue.toFixed(2).replace(".", ",")}
+                      </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.descQnty}</Typography>
@@ -319,7 +330,10 @@ const TableMaterial = () => {
                       className="border-color"
                       name="unitValue"
                       onChange={handleChange}
-                      value={materialSelected && materialSelected.unitValue.toFixed(2).replace('.',',')}
+                      value={
+                        materialSelected &&
+                        materialSelected.unitValue.toFixed(2).replace(".", ",")
+                      }
                     />
                   </div>
                   {/*footer*/}

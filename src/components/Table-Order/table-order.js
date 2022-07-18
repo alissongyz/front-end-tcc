@@ -27,6 +27,8 @@ const TableOrder = () => {
 
   const [showModalPatch, setModalPatch] = useState(false);
   const [showModalDelete, setModalDelete] = useState(false);
+  const [showItemNotFound, setItemNotFound] = useState(false);
+  const [showQntyNotFound, setQntyNotFound] = useState(false);
 
   const openCloseModalPatch = () => {
     setModalPatch(!showModalPatch);
@@ -34,6 +36,14 @@ const TableOrder = () => {
 
   const openCloseModalDelete = () => {
     setModalDelete(!showModalDelete);
+  };
+
+  const openCloseModalItemNotFound = () => {
+    setItemNotFound(!showItemNotFound);
+  };
+
+  const openCloseModalErrorQnty = () => {
+    setQntyNotFound(!showQntyNotFound);
   };
 
   const [orderSelected, setOrderSelected] = useState({
@@ -59,7 +69,7 @@ const TableOrder = () => {
 
   const authorization = {
     headers: {
-      'x-access-token': `${token}`,
+      "x-access-token": `${token}`,
     },
   };
 
@@ -80,8 +90,21 @@ const TableOrder = () => {
         setUpdateData(true);
         openCloseModalPatch();
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((e) => {
+        if (e.response.data.itemNotFound === true) {
+          openCloseModalPatch(false);
+          openCloseModalItemNotFound();
+        }
+
+        if (e.response.data.materialQnty === false) {
+          openCloseModalPatch(false);
+          openCloseModalErrorQnty();
+        }
+
+        if (e.response.data.medicineQnty === false) {
+          openCloseModalPatch(false);
+          openCloseModalErrorQnty();
+        }
       });
   };
 
@@ -103,7 +126,7 @@ const TableOrder = () => {
       await api
         .get("order", {
           headers: {
-            'x-access-token': `${token}`,
+            "x-access-token": `${token}`,
           },
         })
         .then((res) => {
@@ -166,8 +189,7 @@ const TableOrder = () => {
                       <Typography
                         className={classes.status}
                         style={{
-                          backgroundColor:
-                            (row.status === "PENDING" && "orange") 
+                          backgroundColor: row.status === "PENDING" && "orange",
                         }}
                       >
                         {row.status === "PENDING" && "PENDENTE"}
@@ -207,6 +229,101 @@ const TableOrder = () => {
             </TableFooter>
           </Table>
         </TableContainer>
+
+        {/*MODAL DE ERRO NA QUANTIDADE*/}
+        {showQntyNotFound ? (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                {/*content*/}
+                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                  {/*header*/}
+                  <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                    <h3 className="text-3xl font-semibold text-[red]">
+                    Não conseguimos processar a autorização desse pedido.
+                    </h3>
+                    <button
+                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                      onClick={() => setQntyNotFound(false)}
+                    >
+                      <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  {/* BODY */}
+                  <div className="relative p-6 flex-auto">
+                    <h1 className="text-gray-500">
+                      Motivo: A quantiade de {orderSelected.qnty} itens de {orderSelected.itemName} excede a quantiade em estoque. Verifique a quantidade disponível.
+                    </h1>
+                    <h1 className="text-gray-500">
+                      Solução: Reprove o pedido.
+                    </h1>
+                  </div>
+                  {/*footer*/}
+                  <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                    <button
+                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setQntyNotFound(false)}
+                    >
+                      Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </>
+        ) : null}
+
+        {/*MODAL DE ERRO ITEM NOTFOUND*/}
+        {showItemNotFound ? (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                {/*content*/}
+                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                  {/*header*/}
+                  <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                    <h3 className="text-3xl font-semibold text-[red]">
+                    Não conseguimos processar a autorização desse pedido.
+                    </h3>
+                    <button
+                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                      onClick={() => setItemNotFound(false)}
+                    >
+                      <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  {/* BODY */}
+                  <div className="relative p-6 flex-auto">
+                    <p className="text-gray-500">
+                      Motivo: Não encontramos esse
+                      material/medicamento em estoque.
+                    </p>
+                    <p className="text-gray-500">
+                      Solução: Reprove o pedido.
+                    </p>
+                  </div>
+                  {/*footer*/}
+                  <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                    <button
+                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setItemNotFound(false)}
+                    >
+                      Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </>
+        ) : null}
 
         {/*MODAL DE ATUALIZAÇÃO*/}
         {showModalPatch ? (

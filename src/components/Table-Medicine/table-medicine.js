@@ -67,11 +67,11 @@ const TableMedicine = () => {
 
   const token = localStorage.getItem("x-access-token");
 
-  console.log("token:", token)
+  console.log("token:", token);
 
   const authorization = {
     headers: {
-      'x-access-token': `${token}`,
+      "x-access-token": `${token}`,
     },
   };
 
@@ -129,7 +129,7 @@ const TableMedicine = () => {
       await api
         .get("medicines", {
           headers: {
-            'x-access-token': `${token}`,
+            "x-access-token": `${token}`,
           },
         })
         .then((res) => {
@@ -219,13 +219,24 @@ const TableMedicine = () => {
                       <Typography>{row.name}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{row.qnty}</Typography>
+                      <Typography
+                        className={classes.status}
+                        style={{
+                          backgroundColor:
+                            (row.qnty <= row.minQnty && "red") ||
+                            (row.qnty >= row.minQnty && "limegreen"),
+                        }}
+                      >
+                        {row.qnty}
+                      </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>R${row.valueOfInput.toFixed(2).replace('.', ',')}</Typography>
+                      <Typography>
+                        R${row.valueOfInput.toFixed(2).replace(".", ",")}
+                      </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.descQnty}</Typography>
@@ -328,7 +339,12 @@ const TableMedicine = () => {
                       className="border-color"
                       name="unitValue"
                       onChange={handleChange}
-                      value={medicineSelected && medicineSelected.valueOfInput.toFixed(2).replace('.', ',')}
+                      value={
+                        medicineSelected &&
+                        medicineSelected.valueOfInput
+                          .toFixed(2)
+                          .replace(".", ",")
+                      }
                     />
                     <br />
                     <label className="text-gray-500">Lote:</label>
