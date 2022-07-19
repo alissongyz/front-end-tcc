@@ -151,7 +151,7 @@ const ModalCreateMedicine = () => {
                       rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
             onClick={() => openCloseModalMedicine()}
           >
-            Solicitar saída de Medicamento
+            Solicitar saída
           </button>
           <button
             className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
@@ -329,7 +329,7 @@ const ModalCreateMedicine = () => {
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold text-gray-[#2D8AE0]">
-                      Solicitar saída de medicamento
+                      Solicitar saída
                     </h3>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"

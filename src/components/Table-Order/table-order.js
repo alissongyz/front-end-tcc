@@ -333,7 +333,7 @@ const TableOrder = () => {
                       ></path>
                     </svg>
                     <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                      Não encontramos o item {orderSelected.itemName} dispónivel
+                      Não encontramos o item {orderSelected.itemName} disponível
                       em estoque. Verifique se esse item existe.
                     </h3>
                     <button
