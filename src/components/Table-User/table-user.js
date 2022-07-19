@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../utils/api";
 import moment from "moment";
-import CreateUser from "./modal-create-user";
 import {
   Table,
   TableBody,
@@ -14,6 +12,10 @@ import {
   TablePagination,
   TableFooter,
 } from "@material-ui/core";
+import * as AiIcons from 'react-icons/ai'
+
+import CreateUser from "./modal-create-user";
+import api from "../../utils/api";
 import { useStyles } from "../../styles/table";
 
 const TableUser = () => {
@@ -29,7 +31,7 @@ const TableUser = () => {
 
   const authorization = {
     headers: {
-      'x-access-token': `${token}`,
+      "x-access-token": `${token}`,
     },
   };
 
@@ -101,9 +103,10 @@ const TableUser = () => {
     if (e.target.value === "") {
       setData(search);
     } else {
-      const filterResult = search.filter((item) =>
-        item.username.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        item.role.toLowerCase().includes(e.target.value.toLowerCase())
+      const filterResult = search.filter(
+        (item) =>
+          item.username.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          item.role.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setData(filterResult);
     }
@@ -115,7 +118,7 @@ const TableUser = () => {
       await api
         .get("user", {
           headers: {
-            'x-access-token': `${token}`,
+            "x-access-token": `${token}`,
           },
         })
         .then((res) => {
@@ -208,7 +211,7 @@ const TableUser = () => {
                     rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
                           onClick={() => selectUser(row, "Editar")}
                         >
-                          Atualizar
+                          <AiIcons.AiOutlineForm />
                         </button>{" "}
                       </Typography>
                     </TableCell>

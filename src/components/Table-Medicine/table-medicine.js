@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import api from "../../utils/api";
 import moment from "moment";
 import {
   Table,
@@ -13,6 +12,9 @@ import {
   TablePagination,
   TableFooter,
 } from "@material-ui/core";
+import * as AiIcons from "react-icons/ai";
+
+import api from "../../utils/api";
 import { useStyles } from "../../styles/table";
 
 const TableMedicine = () => {
@@ -221,7 +223,7 @@ const TableMedicine = () => {
                         style={{
                           backgroundColor:
                             (row.qnty <= row.minQnty && "red") ||
-                            (row.qnty >= row.minQnty && "limegreen")
+                            (row.qnty >= row.minQnty && "limegreen"),
                         }}
                       >
                         {row.qnty}
@@ -231,9 +233,7 @@ const TableMedicine = () => {
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>
-                        R${row.valueOfInput}
-                      </Typography>
+                      <Typography>R${row.valueOfInput}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.descQnty}</Typography>
@@ -253,7 +253,7 @@ const TableMedicine = () => {
                     rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
                           onClick={() => selectMaterial(row, "Editar")}
                         >
-                          Atualizar
+                          <AiIcons.AiOutlineForm />
                         </button>{" "}
                       </Typography>
                     </TableCell>

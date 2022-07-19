@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import api from "../../utils/api";
 import moment from "moment";
 import {
   Table,
@@ -13,6 +12,9 @@ import {
   TablePagination,
   TableFooter,
 } from "@material-ui/core";
+import * as AiIcons from 'react-icons/ai'
+
+import api from "../../utils/api";
 import { useStyles } from "../../styles/table";
 
 const TableMaterial = () => {
@@ -246,7 +248,7 @@ const TableMaterial = () => {
                     rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
                           onClick={() => selectMaterial(row, "Editar")}
                         >
-                          Atualizar
+                          <AiIcons.AiOutlineForm />
                         </button>{" "}
                       </Typography>
                     </TableCell>

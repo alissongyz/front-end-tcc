@@ -1,51 +1,46 @@
 import React from 'react';
 import * as AiIcons from 'react-icons/ai';
-import * as RiIcons from 'react-icons/ri';
-// import * as MdIcons from 'react-icons/md';
-import * as CgIcons from 'react-icons/cg';
+import * as BsIcons from 'react-icons/bs';
 import * as BiIcons from 'react-icons/bi';
+import * as GiIcons from 'react-icons/gi';
+import * as FiIcons from 'react-icons/fi';
 
 export const SideBarData = [
     {
         title: 'Dashboard',
         path: '/dashboard',
-        icon: <AiIcons.AiOutlineDashboard />,
+        icon: <AiIcons.AiOutlineLineChart />,
     },
     {
         title: 'Usuários',
         path: '/users',
-        icon: <AiIcons.AiOutlineUsergroupAdd />,
+        icon: <FiIcons.FiUsers />,
     },
     {
         title: 'Materiais',
         path: '/material',
-        icon: <AiIcons.AiOutlineLayout />,
+        icon: <BsIcons.BsBoxSeam />,
     },
     {
         title: 'Medicamentos',
         path: '/medicine',
-        icon: <RiIcons.RiDashboardLine />,
+        icon: <GiIcons.GiMedicines />,
     },
     {
         title: 'Pedidos Pendentes',
         path: '/consult-order',
-        icon: <CgIcons.CgScreen />,
+        icon: <BsIcons.BsFileEarmarkText />,
     },
     {
         title: 'Registro de Saídas',
         path: '/teste2',
         icon: <AiIcons.AiOutlineSolution />,
     },
-    // {
-    //     title: 'Sobre Nós',
-    //     path: '/aboutus',
-    //     icon: <AiIcons.AiOutlineBook />,
-    // },
-    // {
-    //     title: 'Contato',
-    //     path: '/contact',
-    //     icon: <MdIcons.MdCall />,
-    // },
+    {
+        title: 'Configurações',
+        path: '/settings',
+        icon: <FiIcons.FiSettings />,
+    },
     {
         title: 'Sair',
         path: '/',
