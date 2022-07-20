@@ -7,7 +7,7 @@ import User from "../pages/User/Users";
 import Login from "../pages/Login/Login";
 import Medicine from "../pages/Medicines/Medicines";
 import Orders from "../pages/Orders/Orders";
-import PrivateRoute from "../components/Routes/PrivateRoute";
+import PrivateRoute from "../components/routes/PrivateRoute";
 import Page404 from "../pages/404/Page-404";
 
 function PathRoutes() {
