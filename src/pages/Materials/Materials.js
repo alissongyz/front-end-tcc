@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../../components/SideBar/sidebar";
-import ModalCreateMaterial from '../../components/Table-Material/modal-create-material'
-import TableMaterial from "../../components/Table-Material/table-material";
+import Navbar from "../../components/sidebar/sidebar";
+import ModalCreateMaterial from '../../components/material/modal-create-material'
+import TableMaterial from "../../components/material/table-material";
 
 function Material() {
   return (

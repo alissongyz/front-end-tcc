@@ -1,14 +1,12 @@
 import React from "react";
 import Navbar from "../../components/sidebar/sidebar";
-import TableUser from "../../components/user/table-user";
 
-function User() {
+const Dash = () => {
   return (
     <>
       <Navbar />
-      <TableUser />
     </>
   );
-}
+};
 
-export default User;
+export default Dash;

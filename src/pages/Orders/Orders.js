@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../../components/SideBar/sidebar";
-import TableOrder from "../../components/Table-Order/table-order";
+import Navbar from "../../components/sidebar/sidebar";
+import TableOrder from "../../components/order/table-order";
 
 function Orders() {
   return (
