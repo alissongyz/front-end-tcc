@@ -2,8 +2,9 @@
 import { IconContext } from "react-icons/lib";
 import { FaLastfmSquare } from "react-icons/fa";
 import api from "../../utils/api";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import * as VscIcons from "react-icons/vsc";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -14,6 +15,20 @@ export default function Login() {
     username: "",
     password: "",
   });
+
+  /* LÓGICA DE VISUALIZAR A SENHA NO FORMULÁRIO */
+  const inputRef = useRef(null);
+  const [eyeIsClosed, setEyeState] = useState(false);
+
+  const toggleShow = () => {
+    if (inputRef.current.type === "password") {
+      setEyeState(true);
+      inputRef.current.type = "text";
+    } else {
+      setEyeState(false);
+      inputRef.current.type = "password";
+    }
+  };
 
   const autenticateUser = async () => {
     await api
@@ -62,75 +77,87 @@ export default function Login() {
             {status ? (
               <div
                 id="alert-border-2"
-                class="flex p-4 mb-4 bg-red-100 border-t-4 border-red-500 dark:bg-red-200"
+                className="flex p-4 mb-4 bg-red-100 border-t-4 border-red-500 dark:bg-red-200"
                 role="alert"
               >
                 <svg
-                  class="flex-shrink-0 w-5 h-5 text-red-700"
+                  className="flex-shrink-0 w-5 h-5 text-red-700"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   ></path>
                 </svg>
-                <div class="ml-3 text-sm font-medium text-red-700">
+                <div className="ml-3 text-sm font-medium text-red-700">
                   {status.mensagem}
                 </div>
                 <button
                   type="button"
-                  class="ml-auto -mx-1.5 -my-1.5 bg-red-100 dark:bg-red-200 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 dark:hover:bg-red-300 inline-flex h-8 w-8"
+                  className="ml-auto -mx-1.5 -my-1.5 bg-red-100 dark:bg-red-200 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 dark:hover:bg-red-300 inline-flex h-8 w-8"
                   aria-label="Close"
                   onClick={() => setStatus(false)}
                 >
-                  <span class="sr-only">Dismiss</span>
+                  <span className="sr-only">Dismiss</span>
                   <svg
                     aria-hidden="true"
-                    class="w-5 h-5"
+                    className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     ></path>
                   </svg>
                 </button>
               </div>
             ) : null}
-            <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label className="text-gray-500">Nome de usuário:</label>
-                <input
-                  id="email-address"
-                  name="username"
-                  type="username"
-                  autoComplete="username"
-                  required
-                  className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Digite seu nome de usuário aqui"
-                  onChange={handleChange}
-                />
+              <div className="col-span-6 sm:col-span-3">
+                <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                  Nome de Usuário
+                </label>
+                <div className="md:flex items-center justify-center">
+                  <input
+                    type="text"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                          sm:text-sm rounded-md block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                           dark:placeholder-gray-400 dark:text-white"
+                    name="username"
+                    onChange={handleChange}
+                    placeholder="Nome de usuário"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="text-gray-500">Senha:</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900
-                  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Digite sua senha aqui"
-                  onChange={handleChange}
-                />
+              <div className="col-span-6 sm:col-span-3">
+                <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                  Senha
+                </label>
+                <div className="md:flex items-center justify-center">
+                  <input
+                    ref={inputRef}
+                    type="password"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
+                          sm:text-sm rounded-l block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                           dark:placeholder-gray-400 dark:text-white"
+                    name="password"
+                    onChange={handleChange}
+                    placeholder="••••••••"
+                  />
+                  <button className="button" onClick={toggleShow}>
+                    {eyeIsClosed ? (
+                      <VscIcons.VscEye />
+                    ) : (
+                      <VscIcons.VscEyeClosed />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
 
