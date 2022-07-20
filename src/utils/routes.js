@@ -9,6 +9,7 @@ import Medicine from "../pages/Medicines/Medicines";
 import Orders from "../pages/Orders/Orders";
 import PrivateRoute from "../components/routes/PrivateRoute";
 import Page404 from "../pages/404/Page-404";
+import Dash from "../pages/Dashboard/Dashboard";
 
 function PathRoutes() {
   return (
@@ -21,6 +22,7 @@ function PathRoutes() {
         {/* PRIVATE ROUTES */}
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/dashboard" element={<Dash />} />
           <Route path="/material" element={<Material />} />
           <Route path="/medicine" element={<Medicine />} />
           <Route path="/users" element={<User />} />
