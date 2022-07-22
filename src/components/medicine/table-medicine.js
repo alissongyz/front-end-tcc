@@ -233,7 +233,12 @@ const TableMedicine = () => {
                       <Typography>{row.minQnty}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>R${row.valueOfInput}</Typography>
+                      <Typography>
+                        {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(row.valueOfInput)}
+                      </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.descQnty}</Typography>

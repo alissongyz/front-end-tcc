@@ -12,7 +12,7 @@ import {
   TablePagination,
   TableFooter,
 } from "@material-ui/core";
-import * as AiIcons from 'react-icons/ai'
+import * as AiIcons from "react-icons/ai";
 
 import api from "../../utils/api";
 import { useStyles } from "../../styles/table";
@@ -232,7 +232,10 @@ const TableMaterial = () => {
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>
-                        R${row.unitValue}
+                        {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(row.unitValue)}
                       </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
@@ -349,9 +352,7 @@ const TableMaterial = () => {
                              dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           name="unitValue"
                           onChange={handleChange}
-                          value={
-                            materialSelected && materialSelected.unitValue
-                          }
+                          value={materialSelected && materialSelected.unitValue}
                         />
                       </div>
                       <div className="col-span-6 sm:col-span-3">
