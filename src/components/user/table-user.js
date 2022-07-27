@@ -179,7 +179,7 @@ const TableUser = () => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.tableHeaderCell}>
-                  Nome de Usuário
+                  Usuário
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
                   Nível de Acesso

@@ -187,7 +187,7 @@ const TableMaterial = () => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.tableHeaderCell}>
-                  Nome do Material
+                  Material
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
                   Quantidade
