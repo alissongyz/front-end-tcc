@@ -10,6 +10,7 @@ import Orders from "../pages/Orders/Orders";
 import PrivateRoute from "../components/routes/PrivateRoute";
 import Page404 from "../pages/404/Page-404";
 import Dash from "../pages/Dashboard/Dashboard";
+import Correios from "../pages/Correios/Correios";
 
 function PathRoutes() {
   return (
@@ -27,6 +28,7 @@ function PathRoutes() {
           <Route path="/medicine" element={<Medicine />} />
           <Route path="/users" element={<User />} />
           <Route path="/consult-order" element={<Orders />} />
+          <Route path="/correios" element={<Correios />} />
         </Route>
       </Routes>
     </BrowserRouter>
