@@ -188,7 +188,7 @@ const TableMedicine = () => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.tableHeaderCell}>
-                  Nome do Medicamento
+                  Medicamento
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
                   Quantidade
