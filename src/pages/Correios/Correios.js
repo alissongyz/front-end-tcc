@@ -1,5 +1,5 @@
 import ConsultaCEP from "../../components/correios/consulta-cep";
-import Navbar from "../../components/sidebar/sidebar";
+import Navbar from "../../components/SideBar/sidebar";
 
 const Correios = () => {
 
