@@ -7,11 +7,11 @@ import User from "../pages/User/Users";
 import Login from "../pages/Login/Login";
 import Medicine from "../pages/Medicines/Medicines";
 import Orders from "../pages/Orders/Orders";
-import PrivateRoute from "../components/routes/PrivateRoute";
 import Page404 from "../pages/404/Page-404";
 import Dash from "../pages/Dashboard/Dashboard";
 import Correios from "../pages/Correios/Correios";
 import SettingsPage from "../pages/Settings/Settings";
+import PrivateRoute from "../components/Routes/PrivateRoute"
 
 function PathRoutes() {
   return (
