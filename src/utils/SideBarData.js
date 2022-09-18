@@ -43,6 +43,11 @@ export const SideBarData = [
         icon: <TbIcons.TbTruckDelivery />,
     },
     {
+        title: 'Ask-Order',
+        path: '/ask',
+        icon: <TbIcons.TbTruckDelivery />,
+    },
+    {
         title: 'Configurações',
         path: '/settings',
         icon: <FiIcons.FiSettings />,
