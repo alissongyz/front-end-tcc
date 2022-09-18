@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../../components/sidebar/sidebar";
 import TableMedicine from "../../components/medicine/table-medicine";
+import Navbar from "../../components/SideBar/sidebar";
 
 function Medicine() {
   return (

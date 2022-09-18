@@ -60,6 +60,7 @@ const TableMedicine = () => {
     minQnty: "",
     descQnty: "",
     valueOfInput: "",
+    grossValue: "",
     validity: "",
     lote: "",
   });
@@ -185,6 +186,7 @@ const TableMedicine = () => {
     { label: "Quantidade Mínima", key: "minQnty" },
     { label: "Tipo de Unidade", key: "descQnty" },
     { label: "Valor da Unidade", key: "valueOfInput" },
+    { label: "Valor Bruto", key: "grossValue" },
     { label: "Validade", key: "validity" },
     { label: "Lote", key: "lote" },
     { label: "Data de Registro", key: "dateRegister" },
@@ -296,6 +298,9 @@ const TableMedicine = () => {
                   Valor por Unidade
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
+                  Valor Bruto
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
                   Tipo de unidade
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
@@ -334,6 +339,14 @@ const TableMedicine = () => {
                           style: "currency",
                           currency: "BRL",
                         }).format(row.valueOfInput)}
+                      </Typography>
+                    </TableCell>
+                    <TableCell className={classes.tableCell}>
+                      <Typography>
+                        {Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(row.grossValue)}
                       </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>

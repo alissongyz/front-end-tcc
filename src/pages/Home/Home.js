@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/sidebar/sidebar";
+import Navbar from "../../components/SideBar/sidebar";
 import { Container } from "./styles";
 
 const HomePage = () => {
