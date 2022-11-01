@@ -1,6 +1,6 @@
 import React from "react";
 import TableMaterial from "../../components/material/table-material";
-import Navbar from "../../components/SideBar/sidebar";
+import Navbar from "../../components/sidebar/sidebar";
 
 function Material() {
   return (

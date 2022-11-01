@@ -2,19 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import api from "../../utils/api";
 import * as FAIcons from 'react-icons/fa';
+import { CSVLink } from "react-csv";
 
 const ModalCreateOrder = () => {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [dataMaterial, setDataMaterial] = useState([]);
-  const [itemsMaterial, setItemsMaterial] = useState([
-    { itemName: 'teste 1', qnty: 1, isSelected: true },
-    { itemName: 'teste 2', qnty: 2, isSelected: true }
-  ]);
-  const [itemsMedicine, setItemsMedicine] = useState([
-        { itemName: 'teste 1', qnty: 1, isSelected: true },
-        { itemName: 'teste 2', qnty: 2, isSelected: true }
-  ]);
+  const [itemsMaterial, setItemsMaterial] = useState([]);
+  const [itemsMedicine, setItemsMedicine] = useState([]);
   const [dataMedicine, setDataMedicine] = useState([]);
   const [updateData, setUpdateData] = useState(true);
 
@@ -30,11 +25,9 @@ const ModalCreateOrder = () => {
     const newItems = [...itemsMaterial, newItem]
 
     setItemsMaterial(newItems);
-    console.log("printando novo item que foi adicionado" + newItem.itemName);
   };
 
   const handleAddButtonClicMedicine = (e) => {
-      
       const value = e.target.value;
       if(value !== ''){
         const newItem = {
@@ -46,7 +39,6 @@ const ModalCreateOrder = () => {
         const newItems = [...itemsMedicine, newItem]
     
         setItemsMedicine(newItems);
-        console.log("printando novo item que foi adicionado" + newItem.itemName);
       }
   };
 
@@ -126,6 +118,20 @@ const ModalCreateOrder = () => {
     motive: "",
   });
 
+  const header = [
+    { label: "Número Pedido", key: "nroOrder" },
+    { label: "Solicitante", key: "requiredBy" },
+    { label: "Item", key: "itemName" },
+    { label: "Quantidade", key: "qnty" },
+    { label: "Status", key: "status" }
+  ];
+
+  const csvReport = {
+    data: data,
+    headers: header,
+    filename: "pedidos.csv",
+  };
+
   const authorization = {
     headers: {
         "x-access-token": `${token}`,
@@ -137,6 +143,21 @@ const ModalCreateOrder = () => {
   };
 
   useEffect(() => {
+    const getOrders = async () => {
+      await api
+        .get("order/multiple/user", {
+          headers: {
+            "x-access-token": `${token}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     const getAllMaterial = async () => {
       await api
         .get("material", {
@@ -167,12 +188,11 @@ const ModalCreateOrder = () => {
       };
 
     if (updateData) {
+      getOrders();
       getAllMaterial();
-      console.log("printando material" + dataMaterial.name);
       getAllMedicine();
-      console.log("printando medicine" + dataMedicine)
     }
-  }, [token]);
+  }, [token, updateData]);
 
   return (
     <>
@@ -187,6 +207,12 @@ const ModalCreateOrder = () => {
             onClick={() => openCloseModal()}
           >
             Novo Pedido
+          </button>
+          <button
+            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
+                            rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
+          >
+            <CSVLink {...csvReport}>Exportar CSV</CSVLink>
           </button>
         </nav>
         {/*MODAL DE CADASTRO*/}
@@ -213,49 +239,6 @@ const ModalCreateOrder = () => {
                   {/*body*/}
                   <div className="p-6 space-y-6">
                     <div className="grid grid-cols-6 gap-6">
-                      {/* <div className="col-span-6 sm:col-span-3">
-                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
-                          Material
-                        </label>
-                        <input
-                          type="text"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
-                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600
-                           block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 
-                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          name="name-material"
-                          placeholder="Exemplo: Material"
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <div className="col-span-6 sm:col-span-3">
-                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
-                          Quantidade
-                        </label>
-                        <input
-                          type="number"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
-                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600
-                           block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
-                           ark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          name="qnty-material"
-                          placeholder="Exemplo: 10"
-                          onChange={handleChange}
-                        />
-                      </div> */}
-                      {/* <select
-                          className="shadow-sm bg-gray-50 border border-gray-300 
-                           text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600
-                           dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          disabled={false}
-                          value={select}
-                          onChange={handleAddButtonClicMaterial}
-                          name="itemName"
-                        >
-                          {dataMaterial.map((item) => (
-                            <option key={item.uuid}>{item.name}</option>
-                          ))}
-                        </select> */}
                         <label>
                           Selecione o Material:
                         </label>
@@ -319,39 +302,6 @@ const ModalCreateOrder = () => {
                                 </div>
                             ))}
                         </div>
-                        
-                      
-                      
-                      {/* <div className="col-span-6 sm:col-span-3">
-                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
-                          Medicamento
-                        </label>
-                        <input
-                          type="text"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
-                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600
-                           block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 
-                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          name="name-medicine"
-                          placeholder="Exemplo: Material"
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <div className="col-span-6 sm:col-span-3">
-                        <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
-                          Quantidade
-                        </label>
-                        <input
-                          type="number"
-                          className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
-                           sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600
-                           block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
-                           ark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          name="qnty-medicine"
-                          placeholder="Exemplo: 10"
-                          onChange={handleChange}
-                        />
-                      </div> */}
                       <div className="col-span-6 sm:col-span-6">
                       <label className="lock mb-2 text-sm font-medium text-gray-500 dark:text-white">
                         Motivo

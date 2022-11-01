@@ -12,7 +12,7 @@ import {
   TablePagination,
   TableFooter,
 } from "@material-ui/core";
-import * as CgIcons from "react-icons/cg";
+import * as AiIcons from "react-icons/ai";
 import { useStyles } from "../../styles/table";
 
 const TableOrderA = () => {
@@ -56,6 +56,7 @@ const TableOrderA = () => {
     deleted: "",
     dateRegister: "",
     dateUpdated: "",
+    nroOrder: ""
   });
 
   const selectOrder = (order, option) => {
@@ -121,7 +122,26 @@ const TableOrderA = () => {
   };
 
   useEffect(() => {
-    
+    const getOrders = async () => {
+      await api
+        .get("order/multiple/user", {
+          headers: {
+            "x-access-token": `${token}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    if (updateData) {
+      getOrders();
+      setUpdateData(false);
+    }
   }, [token, updateData]);
 
   return (
@@ -138,7 +158,7 @@ const TableOrderA = () => {
                   Solicitado Por
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
-                  Nome do Medicamento
+                  Item
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
                   Quantidade
@@ -146,11 +166,13 @@ const TableOrderA = () => {
                 <TableCell className={classes.tableHeaderCell}>
                   Status
                 </TableCell>
-                <TableCell className={classes.tableHeaderCell}>Ações</TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Ações
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data
+            {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
                   <TableRow key={row.uuid}>
@@ -158,7 +180,11 @@ const TableOrderA = () => {
                       <Typography>{row.nroOrder}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography>{row.requiredBy}</Typography>
+                      <Typography
+                        className={classes.tableCell}
+                      >
+                        {row.requiredBy}
+                      </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography>{row.itemName}</Typography>
@@ -175,23 +201,16 @@ const TableOrderA = () => {
                       >
                         {row.status === "PENDING" && "PENDENTE"}
                       </Typography>
-                    </TableCell>
+                    </TableCell>  
                     <TableCell className={classes.tableCell}>
                       <Typography>
                         <button
                           className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
-                    rounded-md shadow-sm text-base font-normal text-white bg-[#22C55E] active:bg-[#2D8AE0] hover:bg-[#16A34A]"
+                    rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
                           onClick={() => selectOrder(row, "Editar")}
                         >
-                          <CgIcons.CgCheckO />
-                        </button>
-                        <button
-                          className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
-                    rounded-md shadow-sm text-base font-normal text-white bg-[#EF4444] active:bg-[#2D8AE0] hover:bg-[#DC2626]"
-                          onClick={() => selectOrder(row, "Excluir")}
-                        >
-                          <CgIcons.CgCloseO />
-                        </button>
+                          <AiIcons.AiOutlineInfoCircle />
+                        </button>{" "}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -343,7 +362,7 @@ const TableOrderA = () => {
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold text-[#22C55E]">
-                      Confirmar saída
+                      Resumo do pedido
                     </h3>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -380,16 +399,6 @@ const TableOrderA = () => {
                       onClick={() => setModalPatch(false)}
                     >
                       Fechar
-                    </button>
-                    <button
-                      className="bg-[#22C55E] active:bg-[#2D8AE0] hover:bg-[#16A34A] font-bold uppercase text-sm px-6 py-3 rounded shadow 
-                      outline-none text-white focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => {
-                        updateOrder();
-                      }}
-                    >
-                      Confirmar
                     </button>
                   </div>
                 </div>

@@ -102,7 +102,6 @@ const TableMaterial = () => {
     { label: "Quantidade Mínima", key: "minQnty" },
     { label: "Tipo de Unidade", key: "descQnty" },
     { label: "Valor da Unidade", key: "unitValue" },
-    { label: "Valor Bruto", key: "grossValue" },
     { label: "Validade", key: "expiration" },
     { label: "Data de Registro", key: "dateRegister" },
   ];
@@ -394,9 +393,6 @@ const TableMaterial = () => {
                   Valor por Unidade
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
-                  Valor Bruto
-                </TableCell>
-                <TableCell className={classes.tableHeaderCell}>
                   Tipo de unidade
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
@@ -434,14 +430,6 @@ const TableMaterial = () => {
                           style: "currency",
                           currency: "BRL",
                         }).format(row.unitValue)}
-                      </Typography>
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      <Typography>
-                        {Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        }).format(row.grossValue)}
                       </Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>

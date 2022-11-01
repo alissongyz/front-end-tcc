@@ -36,7 +36,7 @@ export default function Login() {
       .then((res) => {
         localStorage.setItem("x-access-token", res.data.token);
 
-        navigate("/home");
+        navigate("/material");
       })
       .catch((error) => {
         if (error.response.status === 401) {

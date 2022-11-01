@@ -12,7 +12,7 @@ import Dash from "../pages/Dashboard/Dashboard";
 import Correios from "../pages/Correios/Correios";
 import SettingsPage from "../pages/Settings/Settings";
 import AskOrder from "../pages/AskOrder/AskOrder";
-import PrivateRoute from "../components/Routes/PrivateRoute"
+import PrivateRoute from "../components/routes/PrivateRoute"
 
 function PathRoutes() {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../components/SideBar/sidebar";
+import Navbar from "../../components/sidebar/sidebar";
 import TableUser from "../../components/user/table-user";
 
 function User() {
