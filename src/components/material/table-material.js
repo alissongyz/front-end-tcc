@@ -17,6 +17,7 @@ import { CSVLink } from "react-csv";
 
 import api from "../../utils/api";
 import { useStyles } from "../../styles/table";
+import {acessoValido} from "../../utils/typeValidation";
 
 const TableMaterial = () => {
   const classes = useStyles();
@@ -34,6 +35,7 @@ const TableMaterial = () => {
   };
 
   const token = localStorage.getItem("x-access-token");
+  const role = localStorage.getItem("x-access-type");
 
   const authorization = {
     headers: {
@@ -220,13 +222,16 @@ const TableMaterial = () => {
               onInput={(e) => handleFilter(e)}
             />
           </div>
+          { acessoValido("veterinario", role) ? 
           <button
             className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
                             rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
             onClick={() => openCloseModal()}
           >
             Novo Material
-          </button>
+          </button> : ""
+          }
+          
           <button
             className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
                             rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
@@ -398,7 +403,11 @@ const TableMaterial = () => {
                 <TableCell className={classes.tableHeaderCell}>
                   Data de Validade
                 </TableCell>
+                { acessoValido('veterinario', role) ? 
                 <TableCell className={classes.tableHeaderCell}>Ações</TableCell>
+                : ""
+                }
+                
               </TableRow>
             </TableHead>
             <TableBody>
@@ -438,17 +447,21 @@ const TableMaterial = () => {
                     <TableCell className={classes.tableCell}>
                       {moment(row.dateRegister).format("DD/MM/YYYY")}
                     </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      <Typography>
-                        <button
-                          className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
-                    rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
-                          onClick={() => selectMaterial(row, "Editar")}
-                        >
-                          <AiIcons.AiOutlineForm />
-                        </button>{" "}
-                      </Typography>
-                    </TableCell>
+                    {acessoValido('veterinario', role) ? 
+                      <TableCell className={classes.tableCell}>
+                        <Typography>
+                          <button
+                            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
+                      rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
+                            onClick={() => selectMaterial(row, "Editar")}
+                          >
+                            <AiIcons.AiOutlineForm />
+                          </button>{" "}
+                        </Typography>
+                      </TableCell>
+                    : ""
+                    }
+                    
                   </TableRow>
                 ))}
             </TableBody>

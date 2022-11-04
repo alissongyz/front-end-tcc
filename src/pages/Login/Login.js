@@ -35,6 +35,7 @@ export default function Login() {
       .post("auth/login", userSelected)
       .then((res) => {
         localStorage.setItem("x-access-token", res.data.token);
+        localStorage.setItem("x-access-type", res.data.objectToResponse.role);
 
         navigate("/material");
       })

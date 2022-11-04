@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import api from "../../utils/api";
 import * as FAIcons from 'react-icons/fa';
-import { CSVLink } from "react-csv";
 
 const ModalCreateOrder = () => {
   const [data, setData] = useState([]);
@@ -118,20 +117,6 @@ const ModalCreateOrder = () => {
     motive: "",
   });
 
-  const header = [
-    { label: "Número Pedido", key: "nroOrder" },
-    { label: "Solicitante", key: "requiredBy" },
-    { label: "Item", key: "itemName" },
-    { label: "Quantidade", key: "qnty" },
-    { label: "Status", key: "status" }
-  ];
-
-  const csvReport = {
-    data: data,
-    headers: header,
-    filename: "pedidos.csv",
-  };
-
   const authorization = {
     headers: {
         "x-access-token": `${token}`,
@@ -207,12 +192,6 @@ const ModalCreateOrder = () => {
             onClick={() => openCloseModal()}
           >
             Novo Pedido
-          </button>
-          <button
-            className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
-                            rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
-          >
-            <CSVLink {...csvReport}>Exportar CSV</CSVLink>
           </button>
         </nav>
         {/*MODAL DE CADASTRO*/}

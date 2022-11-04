@@ -7,12 +7,15 @@ import { IconContext } from "react-icons/lib";
 import { SideBarData } from "../../utils/SideBarData";
 import "../../styles/global.css"
 import { NavbarMenu, NavMenu, NavText, ShowSidebarButton } from "./styles";
+import {acessoValido} from "../../utils/typeValidation";
 
 const Navbar = () => {
   const [sidebar, setSidebar] = useState(false);
-
+ 
   const showSidebar = () => setSidebar(!sidebar);
 
+  const role = localStorage.getItem("x-access-type");
+  
   return (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
@@ -33,12 +36,13 @@ const Navbar = () => {
             </li>
             {SideBarData.map((item, index) => {
               return (
-                <Link className="button-edited" to={item.path} onClick={item.title === 'Sair' ? () => {localStorage.removeItem("x-access-token")} : ''}>
+                acessoValido(item.access, role) ? 
+                <Link className="button-edited" to={item.path} onClick={item.title === 'Sair' ? () => {localStorage.removeItem("x-access-token"); localStorage.removeItem("x-access-type")} : ''}>
                   <NavText key={index}>
                       <div className="text-[1.5rem]" onClick={showSidebar}>{item.icon}</div>
                       <span className="ml-4" onClick={showSidebar}>{item.title}</span>
                   </NavText>
-                </Link>
+                </Link> : ""
               );
             })}
           </ul>

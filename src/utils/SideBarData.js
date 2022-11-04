@@ -15,21 +15,25 @@ export const SideBarData = [
         title: 'Usuários',
         path: '/users',
         icon: <FiIcons.FiUsers />,
+        access: 'admin'
     },
     {
         title: 'Materiais',
         path: '/material',
         icon: <BsIcons.BsBoxSeam />,
+        access: 'any'
     },
     {
         title: 'Medicamentos',
         path: '/medicine',
         icon: <GiIcons.GiMedicines />,
+        access: 'any'
     },
     {
         title: 'Pedidos Pendentes',
         path: '/consult-order',
         icon: <BsIcons.BsFileEarmarkText />,
+        access: 'farmaceutico'
     },
     // {
     //     title: 'Registro de Saídas',
@@ -45,15 +49,18 @@ export const SideBarData = [
         title: 'Criar Pedido',
         path: '/ask',
         icon: <TbIcons.TbTruckDelivery />,
+        access: 'veterinario'
     },
     {
         title: 'Configurações',
         path: '/settings',
         icon: <FiIcons.FiSettings />,
+        access: 'any'
     },
     {
         title: 'Sair',
         path: '/',
         icon: <BiIcons.BiLogOut />,
+        access: 'any'
     }
 ]
