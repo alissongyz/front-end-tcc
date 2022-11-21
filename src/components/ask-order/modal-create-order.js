@@ -230,7 +230,7 @@ const ModalCreateOrder = () => {
                           ))}
                         </datalist>
 
-                        <div className='item-list-material flex'>
+                        <div className='item-list-material'>
                             {itemsMaterial.map((item, index) => (
                                 <div className='item-container'>
                                     <div className='item-name'>
