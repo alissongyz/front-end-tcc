@@ -65,7 +65,7 @@ export const ShowSidebarButton = styled.button`
     color: #2FC7F5;
   }
   padding: 8px;
-  margin-left: 7rem;
+  margin-left: 1.7rem;
   font-size: 1.1rem;
   border-radius: 100%;
 

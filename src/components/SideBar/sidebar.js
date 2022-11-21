@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaBars, FaLastfmSquare } from "react-icons/fa";
 import { HiOutlineChevronDoubleLeft } from "react-icons/hi";
 import { Link } from "react-router-dom";
@@ -7,14 +7,31 @@ import { IconContext } from "react-icons/lib";
 import { SideBarData } from "../../utils/SideBarData";
 import "../../styles/global.css"
 import { NavbarMenu, NavMenu, NavText, ShowSidebarButton } from "./styles";
-import {acessoValido} from "../../utils/typeValidation";
+import { acessoValido } from "../../utils/typeValidation";
 
 const Navbar = () => {
   const [sidebar, setSidebar] = useState(false);
  
   const showSidebar = () => setSidebar(!sidebar);
+  const ref = useRef();
 
   const role = localStorage.getItem("x-access-type");
+
+  function handleClickOutside() {
+    if (sidebar !== true) {
+      setSidebar(false);
+    } else if (sidebar === true) {
+      setSidebar(false);
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref]);
   
   return (
     <>
