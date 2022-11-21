@@ -218,19 +218,19 @@ const ModalCreateOrder = () => {
                     </button>
                   </div>
                   {/*body*/}
-                  <div className="p-6 space-y-6">
-                    <div className="grid grid-cols-6 gap-6">
+                  <div className="p-6 space-y-6 h-72">
+                    <div className="grid grid-cols-6 gap-2 h-64 ">
                         <label>
                           Selecione o Material:
                         </label>
-                        <input list="materials" onChange={handleAddButtonClicMaterial}  />
+                        <input list="materials" onChange={handleAddButtonClicMaterial} className="border-2 rounded border-blue-500 w-auto"  />
                         <datalist id="materials">
                           {dataMaterial.map((item) => (
                             <option key={item.uuid} value={item.name} />
                           ))}
                         </datalist>
 
-                        <div className='item-list-material'>
+                        <div className='item-list-material flex'>
                             {itemsMaterial.map((item, index) => (
                                 <div className='item-container'>
                                     <div className='item-name'>
@@ -255,7 +255,7 @@ const ModalCreateOrder = () => {
                         <label>
                           Selecione o Medicamento:
                         </label>
-                        <input list="medicines" onChange={handleAddButtonClicMedicine}/>
+                        <input list="medicines" onChange={handleAddButtonClicMedicine} className="border-2 rounded border-blue-500 w-auto"/>
                         <datalist id="medicines">
                           {dataMedicine.map((item) => (
                             <option key={item.uuid} value={item.name} />
