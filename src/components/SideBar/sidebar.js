@@ -27,9 +27,6 @@ const Navbar = () => {
         <NavMenu className={sidebar && "active"}>
           <ul className="w-full">
             <li className="nav-toggle">
-              <Link to={"/"} className="ml-8 text-[2.5rem]">
-                <FaLastfmSquare color="#fff" />
-              </Link>
               <ShowSidebarButton onClick={showSidebar}>
                 <HiOutlineChevronDoubleLeft />
               </ShowSidebarButton>

@@ -15,6 +15,7 @@ const ModalCreateOrder = () => {
   const handleAddButtonClicMaterial = (e) => {
     
     const value = e.target.value;
+    if(value != '') {
     const newItem = {
       itemName: value,
       qnty: 1,
@@ -24,6 +25,7 @@ const ModalCreateOrder = () => {
     const newItems = [...itemsMaterial, newItem]
 
     setItemsMaterial(newItems);
+    }
   };
 
   const handleAddButtonClicMedicine = (e) => {
@@ -44,7 +46,7 @@ const ModalCreateOrder = () => {
   const handleQuantityIncrease = (index) => {
     const newItems = [...itemsMaterial];
 
-    newItems[index].quantity++;
+    newItems[index].qnty++;
 
     setItemsMaterial(newItems);
   };
@@ -52,9 +54,9 @@ const ModalCreateOrder = () => {
   const handleQuantityDecrease = (index) => {
     const newItems = [...itemsMaterial];
 
-    newItems[index].quantity--;
+    newItems[index].qnty--;
 
-    setItemsMaterial(newItems);
+    setItemsMaterial(newItems)
   };
 
   const handleExcludeItems = (index) => {
@@ -68,7 +70,7 @@ const ModalCreateOrder = () => {
   const handleQuantityIncreaseMedicine = (index) => {
     const newItems = [...itemsMedicine];
 
-    newItems[index].quantity++;
+    newItems[index].qnty++;
 
     setItemsMedicine(newItems);
   };
@@ -83,7 +85,7 @@ const ModalCreateOrder = () => {
   const handleQuantityDecreaseMedicine = (index) => {
     const newItems = [...itemsMedicine];
 
-    newItems[index].quantity--;
+    newItems[index].qnty--;
 
     setItemsMedicine(newItems);
   };
@@ -221,7 +223,7 @@ const ModalCreateOrder = () => {
                         <label>
                           Selecione o Material:
                         </label>
-                        <input list="materials" onChange={handleAddButtonClicMaterial}/>
+                        <input list="materials" onChange={handleAddButtonClicMaterial}  />
                         <datalist id="materials">
                           {dataMaterial.map((item) => (
                             <option key={item.uuid} value={item.name} />
@@ -290,7 +292,7 @@ const ModalCreateOrder = () => {
                         className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         name="motive"
                         onChange={handleMotive}
-                        placeholder="Exemplo: Lorem ipsum platea faucibus dapibus enim commodo euismod a molestie sodales enim morbi lectus, odio bibendum luctus accumsan per a at vel sollicitudin vitae turpis."
+                        placeholder="Exemplo: Digite neste campo o motivo do pedido"
                       />
                     </div>
                       

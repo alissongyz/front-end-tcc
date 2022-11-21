@@ -13,6 +13,7 @@ import {
   TableFooter,
 } from "@material-ui/core";
 import * as CgIcons from "react-icons/cg";
+import { CSVLink } from "react-csv";
 import { useStyles } from "../../styles/table";
 
 const TableOrder = () => {
@@ -70,6 +71,20 @@ const TableOrder = () => {
     headers: {
       "x-access-token": `${token}`,
     },
+  };
+
+  const header = [
+    { label: "Numero do pedido", key: "nroOrder" },
+    { label: "Requerido por", key: "requiredBy" },
+    { label: "Nome do item", key: "itemName" },
+    { label: "Qunatidade", key: "qnty" },
+    { label: "Status", key: "status" },
+  ];
+
+  const csvReport = {
+    data: data,
+    headers: header,
+    filename: "pedidos.csv",
   };
 
   const handleChangePage = (event, newPage) => {
@@ -144,6 +159,14 @@ const TableOrder = () => {
 
   return (
     <>
+    <div className="flex justify-center">
+      <button
+        className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent 
+        rounded-md shadow-sm text-base font-normal text-white bg-[#2D8AE0] active:bg-[#2D8AE0] hover:bg-[#2E66FF]"
+      >
+        <CSVLink {...csvReport}>Exportar CSV</CSVLink>
+      </button>
+      </div>
       <div className="flex justify-center">
         <TableContainer component={Paper} className={classes.tableContainer}>
           <Table className={classes.table} aria-label="simple table">
